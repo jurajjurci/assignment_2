@@ -14,6 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment_2Theme {
+                NavigationCompose()
             }
         }
     }

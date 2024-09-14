@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Assignment_2"
 include(":app")
- 
+include(":core")
+include(":feature_movie")
+include(":feature_settings")
