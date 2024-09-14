@@ -57,9 +57,9 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(project(":core"))
-    implementation(project(":feature_movie"))
-    implementation(project(":feature_settings"))
+    implementation(project(":core-repository"))
+    implementation(project(":feature-movie"))
+    implementation(project(":feature-settings"))
 
     // Jetpack Compose
     implementation(libs.androidx.activity.compose)

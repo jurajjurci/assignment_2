@@ -7,9 +7,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import sk.jurci.assignment_2.utils.parcelableType
-import sk.jurci.core.ui.Movie
-import sk.jurci.feature_movie_detail.MovieDetailUi
-import sk.jurci.feature_movie_list.MovieListUi
+import sk.jurci.core_repository.model.Movie
+import sk.jurci.feature_movie.movie_detail.MovieDetailUi
+import sk.jurci.feature_movie.movie_list.MovieListUi
 import sk.jurci.feature_settings.info.InfoUi
 import sk.jurci.feature_settings.settings.SettingsUi
 import kotlin.reflect.typeOf
