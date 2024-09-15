@@ -4,14 +4,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movies")
-data class MovieDto(
+data class MovieEntity(
 
     @PrimaryKey
     val id: Long,
 
     val adult: Boolean,
 
-    val backdropPath: String,
+    val backdropPath: String?,
 
     val originalLanguage: String,
 

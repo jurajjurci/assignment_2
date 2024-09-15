@@ -26,5 +26,5 @@ class Module {
 
     @Provides
     @Singleton
-    fun providesShortcutDao(database: AppDatabase): MovieDao = database.movieDao()
+    fun providesShortcutDao(database: AppDatabase): MovieDao = database.movieDao
 }

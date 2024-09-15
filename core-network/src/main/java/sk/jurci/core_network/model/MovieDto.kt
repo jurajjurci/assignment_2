@@ -4,14 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieEntity(
+data class MovieDto(
 
     val id: Long,
 
     val adult: Boolean,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
     @SerialName("genre_ids")
     var genreIds: List<Long>,

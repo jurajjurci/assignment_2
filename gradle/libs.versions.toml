@@ -5,6 +5,7 @@ agp = "8.6.0"
 google-ksp = "2.0.10-1.0.24"
 dagger-hilt = "2.51.1"
 kotlin = "2.0.10"
+pagingCompose = "3.3.2"
 room = "2.6.1"
 
 ### DEPENDECIES ###
@@ -38,6 +39,8 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingCompose" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
@@ -59,6 +62,7 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore-preferenc
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 

@@ -1,22 +1,29 @@
 package sk.jurci.core_database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
-import sk.jurci.core_database.model.MovieDto
+import androidx.room.Upsert
+import sk.jurci.core_database.model.MovieEntity
 
 @Dao
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movie: MovieDto)
+    suspend fun insert(movie: MovieEntity)
+
+    @Upsert
+    suspend fun upsertAll(movies: List<MovieEntity>)
 
     @Delete
-    suspend fun delete(movie: MovieDto)
+    suspend fun delete(movie: MovieEntity)
 
-    @Query("SELECT * FROM movies where page like :page")
-    fun getMovies(page: Long): Flow<List<MovieDto>>
+    @Query("SELECT * FROM movies")
+    fun pagingSource(): PagingSource<Int, MovieEntity>
+
+    @Query("DELETE FROM movies")
+    suspend fun clearAll()
 }

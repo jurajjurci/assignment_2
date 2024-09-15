@@ -4,17 +4,17 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import sk.jurci.core_database.dao.MovieDao
 import sk.jurci.core_database.dao.MovieIdToGenreIdDao
-import sk.jurci.core_database.model.MovieDto
-import sk.jurci.core_database.model.MovieIdToGenreIdDto
+import sk.jurci.core_database.model.MovieEntity
+import sk.jurci.core_database.model.MovieIdToGenreIdEntity
 
-@Database(entities = [MovieDto::class, MovieIdToGenreIdDto::class], version = 1)
+@Database(entities = [MovieEntity::class, MovieIdToGenreIdEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "Movie"
     }
 
-    abstract fun movieDao(): MovieDao
+    abstract val movieDao: MovieDao
 
-    abstract fun movieIdToGenreIdDao(): MovieIdToGenreIdDao
+    abstract val movieIdToGenreIdDao: MovieIdToGenreIdDao
 }

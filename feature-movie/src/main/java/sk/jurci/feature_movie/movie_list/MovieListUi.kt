@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 
 package sk.jurci.feature_movie.movie_list
 
@@ -25,14 +25,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.feature_movie.R
 
 @Composable
 fun MovieListUi() {
     val viewModel = hiltViewModel<MovieListViewModel>()
-    val popularMovieList = viewModel.popularMovieList.collectAsStateWithLifecycle()
+    val popularMovieList = viewModel.popularMovieList.collectAsLazyPagingItems()
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -54,8 +54,8 @@ fun MovieListUi() {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp)
             ) {
-                items(popularMovieList.value) { movie ->
-                    GridItem(movie)
+                items(popularMovieList.itemCount) { index ->
+                    GridItem(popularMovieList[index]!!)
                 }
             }
         }

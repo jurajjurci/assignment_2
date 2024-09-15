@@ -43,7 +43,16 @@ dependencies {
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
+    implementation(project(":core-database"))
     ksp(libs.androidx.dagger.hilt.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.androidx.paging.runtime.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

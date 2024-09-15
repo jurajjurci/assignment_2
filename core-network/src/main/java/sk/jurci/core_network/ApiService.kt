@@ -2,7 +2,7 @@ package sk.jurci.core_network
 
 import retrofit2.http.GET
 import retrofit2.http.Query
-import sk.jurci.core_network.model.PopularMovieResponseEntity
+import sk.jurci.core_network.model.PopularMovieResponseDto
 
 interface ApiService {
 
@@ -10,5 +10,5 @@ interface ApiService {
     suspend fun getPopularMovieList(
         @Query("language") language: String,
         @Query("page") page: Int,
-    ): PopularMovieResponseEntity
+    ): PopularMovieResponseDto
 }
