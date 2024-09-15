@@ -22,6 +22,8 @@ dependencyResolutionManagement {
 rootProject.name = "Assignment_2"
 include(":app")
 include(":core-network")
+include(":core-database")
+include(":core-datastore")
 include(":core-repository")
 include(":feature-movie")
 include(":feature-settings")
