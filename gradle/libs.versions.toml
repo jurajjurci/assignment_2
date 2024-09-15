@@ -20,6 +20,7 @@ okhttp = "4.12.0"
 loggingInterceptor = "4.12.0"
 converterKotlinxSerialization = "2.11.0"
 datastore = "1.1.1"
+timber = "5.0.1"
 
 # Testing
 junit = "4.13.2"
@@ -58,6 +59,8 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore-preferenc
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

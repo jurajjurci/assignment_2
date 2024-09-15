@@ -44,6 +44,7 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(project(":core-repository"))
+    implementation(libs.timber)
 
     // Jetpack Compose
     implementation(libs.androidx.activity.compose)

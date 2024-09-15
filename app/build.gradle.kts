@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.androidx.dagger.hilt)
     ksp(libs.androidx.dagger.hilt.compiler)
 
+    implementation(libs.timber)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
