@@ -15,11 +15,11 @@ composeBom = "2024.09.01"
 navigationCompose = "2.8.0"
 serialization = "1.6.3"
 hilt = "1.2.0"
-androidx-work = "2.9.1"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
 converterKotlinxSerialization = "2.11.0"
 datastore = "1.1.1"
+
 # Testing
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -42,9 +42,6 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 # Dependency Injection
 androidx-dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt" }
 androidx-dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger-hilt" }
-androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt" }
-androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
-androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidx-work" }
 androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
 
 #Retrofit

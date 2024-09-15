@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.hilt.plugin)
     alias(libs.plugins.kotlin.android)
 }
 
@@ -37,6 +39,7 @@ dependencies {
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
+    ksp(libs.androidx.dagger.hilt.compiler)
 
     // DataStore
     implementation(libs.androidx.datastore)
