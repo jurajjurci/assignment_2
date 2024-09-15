@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.google.ksp)
@@ -6,6 +9,16 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+val localProperties = Properties()
+val propertiesFile = file("local.properties")
+if (propertiesFile.exists()) {
+    localProperties.load(FileInputStream(propertiesFile))
+} else {
+    println("local.properties file not found in core-network module!")
+}
+val movieApiKey = localProperties.getProperty("TMDB_API_KEY") ?: ""
+val movieApiReadAccessToken = localProperties.getProperty("TMDB_API_READ_ACCESS_TOKEN") ?: ""
+
 android {
     namespace = "sk.jurci.core_network"
     compileSdk = 34
@@ -13,11 +26,9 @@ android {
     defaultConfig {
         minSdk = 24
 
-        buildConfigField(
-            "String",
-            "BASE_URL",
-            "\"https://api.themoviedb.org/3/\""
-        )
+        buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+        buildConfigField("String", "MOVIE_API_KEY", "\"$movieApiKey\"")
+        buildConfigField("String", "MOVIE_API_READ_ACCESS_TOKEN", "\"$movieApiReadAccessToken\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -55,6 +66,7 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
     implementation(libs.converter.kotlinx.serialization)
 
     testImplementation(libs.junit)
