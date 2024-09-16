@@ -76,13 +76,7 @@ fun MovieListUi(
     )
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(R.string.movie_list_title))
-                },
-            )
-        }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.movie_list_title)) }) },
     ) { innerPadding ->
         Box(
             modifier = Modifier
