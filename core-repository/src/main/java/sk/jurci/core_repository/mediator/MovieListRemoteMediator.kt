@@ -32,15 +32,15 @@ class MovieListRemoteMediator @Inject constructor(
         state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try {
-            val currentPage: Int = when (loadType) {
-                LoadType.REFRESH -> 1
+            val (currentPage, currentOrder) = when (loadType) {
+                LoadType.REFRESH -> 1 to 0L
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val lastItem = state.lastItemOrNull()
                     if (lastItem == null) {
-                        1
+                        1 to 0L
                     } else {
-                        lastItem.page + 1
+                        lastItem.page.inc() to lastItem.order.inc()
                     }
                 }
             }
@@ -52,7 +52,7 @@ class MovieListRemoteMediator @Inject constructor(
                 )
             }
 
-            var order = state.lastItemOrNull()?.order?.plus(1) ?: 0L
+            var order = currentOrder
             withContext(ioDispatcher) {
                 appDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH) {
