@@ -82,9 +82,8 @@ fun MovieListUi(movieList: LazyPagingItems<Movie>) {
     )
 
     val snackBarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(key1 = movieList.loadState) {
-        println("itemCount ${movieList.itemCount} loadState ${movieList.loadState}")
-        if (movieList.itemCount > 0 && movieList.loadState.append is LoadState.Error) {
+    LaunchedEffect(key1 = movieList.loadState.refresh, key2 = movieList.loadState.append) {
+        if (movieList.itemCount > 0 && (movieList.loadState.append is LoadState.Error || movieList.loadState.refresh is LoadState.Error)) {
             scope.launch {
                 snackBarHostState.showSnackbar(
                     message = context.getString(R.string.movie_list_error),
