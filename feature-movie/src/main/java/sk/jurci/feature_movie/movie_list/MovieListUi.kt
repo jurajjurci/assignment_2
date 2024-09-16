@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,17 +24,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.flow
 import sk.jurci.core_repository.model.Movie
+import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
 import sk.jurci.feature_movie.R
 
+@Preview
 @Composable
-fun MovieListUi() {
-    val viewModel = hiltViewModel<MovieListViewModel>()
-    val popularMovieList = viewModel.popularMovieList.collectAsLazyPagingItems()
+fun MovieListUiPreview() {
+    val movieList = flow {
+        emit(
+            PagingData.from(
+                listOf(
+                    DEMO_MOVIE,
+                    DEMO_MOVIE.copy(id = 1),
+                    DEMO_MOVIE.copy(id = 2),
+                    DEMO_MOVIE.copy(id = 3),
+                    DEMO_MOVIE.copy(id = 4),
+                    DEMO_MOVIE.copy(id = 5),
+                    DEMO_MOVIE.copy(id = 6),
+                    DEMO_MOVIE.copy(id = 7),
+                )
+            )
+        )
+    }.collectAsLazyPagingItems()
+    MovieListUi(
+        uiState = MovieListUiState(),
+        movieList = movieList,
+        refreshMovieList = {},
+    )
+}
 
+@Composable
+fun MovieListUi(
+    uiState: MovieListUiState,
+    movieList: LazyPagingItems<Movie>,
+    refreshMovieList: () -> Unit,
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val minItemWidth = 300.dp

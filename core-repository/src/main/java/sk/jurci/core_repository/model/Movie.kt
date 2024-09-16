@@ -38,5 +38,24 @@ data class Movie(
     val voteCount: Int,
 
     var favourite: Boolean,
-) : Parcelable
+) : Parcelable {
 
+    companion object {
+        val DEMO_MOVIE = Movie(
+            id = 0,
+            title = "Title",
+            adult = false,
+            backdropPath = null,
+            favourite = false,
+            originalLanguage = "en",
+            originalTitle = "Original title",
+            overview = "This is overview",
+            popularity = 0.5,
+            posterPath = "",
+            releaseDate = "12/2021",
+            video = false,
+            voteAverage = 0.5,
+            voteCount = 100,
+        )
+    }
+}
