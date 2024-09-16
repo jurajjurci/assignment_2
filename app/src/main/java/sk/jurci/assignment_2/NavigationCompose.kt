@@ -38,12 +38,7 @@ fun NavigationCompose() {
         composable<Screen.MovieList> {
             val viewModel = hiltViewModel<MovieListViewModel>()
             val movieList = viewModel.popularMovieList.collectAsLazyPagingItems()
-            val uiState = viewModel.uiState
-            MovieListUi(
-                uiState = uiState,
-                movieList = movieList,
-                refreshMovieList = viewModel::refresh,
-            )
+            MovieListUi(movieList = movieList)
         }
 
         composable<Screen.MovieDetail>(

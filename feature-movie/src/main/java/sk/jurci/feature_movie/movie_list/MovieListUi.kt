@@ -16,12 +16,19 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,9 +37,11 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
 import sk.jurci.feature_movie.R
+import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview
 @Composable
@@ -54,29 +63,41 @@ fun MovieListUiPreview() {
         )
     }.collectAsLazyPagingItems()
     MovieListUi(
-        uiState = MovieListUiState(),
         movieList = movieList,
-        refreshMovieList = {},
     )
 }
 
 @Composable
-fun MovieListUi(
-    uiState: MovieListUiState,
-    movieList: LazyPagingItems<Movie>,
-    refreshMovieList: () -> Unit,
-) {
+fun MovieListUi(movieList: LazyPagingItems<Movie>) {
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val minItemWidth = 300.dp
-    val numberOfColumns = (screenWidth / minItemWidth).toInt().coerceAtLeast(1)
+    val minItemWidth = Dimensions.MovieCard.width
+    val columnsCount = (screenWidth / minItemWidth).toInt().coerceAtLeast(1)
     val pullRefreshState = rememberPullRefreshState(
-        refreshing = uiState.refreshing,
-        onRefresh = refreshMovieList
+        refreshing = movieList.loadState.refresh is LoadState.Loading,
+        onRefresh = { movieList.refresh() },
     )
 
+    val snackBarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(key1 = movieList.loadState) {
+        println("itemCount ${movieList.itemCount} loadState ${movieList.loadState}")
+        if (movieList.itemCount > 0 && movieList.loadState.append is LoadState.Error) {
+            scope.launch {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(R.string.movie_list_error),
+                    actionLabel = context.getString(R.string.movie_list_snack_bar_close),
+                    duration = SnackbarDuration.Indefinite,
+                )
+            }
+        }
+    }
+
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.movie_list_title)) }) },
+        topBar = { TopAppBar(title = { Text(text = stringResource(R.string.movie_list_title)) }) },
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -94,21 +115,32 @@ fun MovieListUi(
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(numberOfColumns),
+                    columns = GridCells.Fixed(columnsCount),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp)
+                    contentPadding = PaddingValues(Dimensions.paddingMedium)
                 ) {
                     items(movieList.itemCount) { index ->
-                        movieList[index]?.let { movie -> MovieItem(movie) }
+                        movieList[index]?.let { movie -> MovieItem(movie = movie) }
+                    }
+                    if (movieList.loadState.append is LoadState.Loading) {
+                        repeat(loadingItemsCount(movieList.itemCount, columnsCount)) {
+                            item {
+                                LoadingItem()
+                            }
+                        }
                     }
                 }
             }
 
             PullRefreshIndicator(
-                refreshing = uiState.refreshing,
+                refreshing = movieList.loadState.refresh is LoadState.Loading,
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter),
             )
         }
     }
+}
+
+private fun loadingItemsCount(moviesCount: Int, columnsCount: Int): Int {
+    return columnsCount - moviesCount.mod(columnsCount)
 }
