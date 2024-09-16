@@ -53,7 +53,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
