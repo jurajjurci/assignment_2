@@ -33,7 +33,9 @@ data class MovieEntity(
 
     val voteCount: Int,
 
-    val page: Int = 0,
+    val page: Int,
+
+    val order: Long,
 
     var favourite: Boolean = false,
 )

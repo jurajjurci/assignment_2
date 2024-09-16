@@ -40,7 +40,7 @@ class MovieListRemoteMediator @Inject constructor(
                     if (lastItem == null) {
                         1
                     } else {
-                        (lastItem.page + 1)
+                        lastItem.page + 1
                     }
                 }
             }
@@ -48,16 +48,18 @@ class MovieListRemoteMediator @Inject constructor(
             val popularMovieResponse = withContext(ioDispatcher) {
                 apiService.getPopularMovieList(
                     language = LANGUAGE,
-                    page = currentPage
+                    page = currentPage,
                 )
             }
+
+            var order = state.lastItemOrNull()?.order?.plus(1) ?: 0L
             withContext(ioDispatcher) {
                 appDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH) {
                         appDatabase.movieDao.clearAll()
                     }
                     appDatabase.movieDao.upsertAll(popularMovieResponse.results.map {
-                        it.toEntity(currentPage)
+                        it.toEntity(currentPage, order++)
                     })
                 }
             }
