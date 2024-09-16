@@ -7,6 +7,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import sk.jurci.core_database.AppDatabase
 import sk.jurci.core_database.model.MovieEntity
@@ -16,6 +18,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class MovieListRemoteMediator @Inject constructor(
+    private val ioDispatcher: CoroutineDispatcher,
     private val appDatabase: AppDatabase,
     private val apiService: ApiService,
 ) : RemoteMediator<Int, MovieEntity>() {
@@ -29,7 +32,7 @@ class MovieListRemoteMediator @Inject constructor(
         state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try {
-            val nextPage: Int = when (loadType) {
+            val currentPage: Int = when (loadType) {
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
@@ -42,20 +45,25 @@ class MovieListRemoteMediator @Inject constructor(
                 }
             }
 
-            val popularMovieResponse = apiService.getPopularMovieList(
-                language = LANGUAGE,
-                page = nextPage
-            )
-            appDatabase.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    appDatabase.movieDao.clearAll()
-                }
-                appDatabase.movieDao.upsertAll(popularMovieResponse.results.map {
-                    it.toEntity(popularMovieResponse.page)
-                })
+            val popularMovieResponse = withContext(ioDispatcher) {
+                apiService.getPopularMovieList(
+                    language = LANGUAGE,
+                    page = currentPage
+                )
             }
+            withContext(ioDispatcher) {
+                appDatabase.withTransaction {
+                    if (loadType == LoadType.REFRESH) {
+                        appDatabase.movieDao.clearAll()
+                    }
+                    appDatabase.movieDao.upsertAll(popularMovieResponse.results.map {
+                        it.toEntity(currentPage)
+                    })
+                }
+            }
+
             return MediatorResult.Success(
-                endOfPaginationReached = popularMovieResponse.page == popularMovieResponse.totalPages,
+                endOfPaginationReached = currentPage == popularMovieResponse.totalPages,
             )
         } catch (exception: IOException) {
             MediatorResult.Error(exception)

@@ -5,13 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import sk.jurci.core_repository.usecase.FetchPopularMovieResponseEntityUseCase
 import javax.inject.Inject
@@ -28,11 +25,6 @@ class MovieListViewModel @Inject constructor(
     val popularMovieList = fetchPopularMovieResponseUseCase()
         .distinctUntilChanged()
         .cachedIn(viewModelScope)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5.seconds.inWholeMilliseconds),
-            initialValue = PagingData.empty()
-        )
 
     fun refresh() {
         viewModelScope.launch {
