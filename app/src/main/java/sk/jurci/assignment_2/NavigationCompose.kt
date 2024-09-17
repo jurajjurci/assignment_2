@@ -19,6 +19,7 @@ import sk.jurci.feature_movie.movie_list.MovieListUi
 import sk.jurci.feature_movie.movie_list.MovieListViewModel
 import sk.jurci.feature_settings.info.InfoUi
 import sk.jurci.feature_settings.settings.SettingsUi
+import java.util.Locale
 import kotlin.reflect.typeOf
 
 object Screen {
@@ -43,7 +44,10 @@ fun NavigationCompose() {
         NavHost(navController = navController, startDestination = Screen.MovieList) {
             composable<Screen.MovieList> {
                 val viewModel = hiltViewModel<MovieListViewModel>()
-                val movieList = viewModel.popularMovieList.collectAsLazyPagingItems()
+                val language = Locale.getDefault().toLanguageTag()
+                val movieList = viewModel
+                    .getPopularMoviePagingFlow(language = language)
+                    .collectAsLazyPagingItems()
                 MovieListUi(
                     animatedVisibilityScope = this,
                     movieList = movieList,

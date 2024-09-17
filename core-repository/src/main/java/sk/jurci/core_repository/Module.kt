@@ -26,20 +26,31 @@ class Module {
     @Singleton
     internal fun providesMovieEntityRepository(
         pager: Pager<Int, MovieEntity>,
-    ): IMovieEntityRepository = MovieEntityRepository(pager = pager)
+        movieListRemoteMediator: MovieListRemoteMediator,
+    ): IMovieEntityRepository = MovieEntityRepository(
+        pager = pager,
+        movieListRemoteMediator = movieListRemoteMediator
+    )
 
     @Provides
     @Singleton
-    fun providesMoviePager(
+    internal fun providesMovieListRemoteMediator(
         databaseRepository: IDatabaseRepository,
         networkRepository: INetworkRepository
+    ): MovieListRemoteMediator = MovieListRemoteMediator(
+        databaseRepository = databaseRepository,
+        networkRepository = networkRepository,
+    )
+
+    @Provides
+    @Singleton
+    internal fun providesMoviePager(
+        movieListRemoteMediator: MovieListRemoteMediator,
+        databaseRepository: IDatabaseRepository,
     ): Pager<Int, MovieEntity> {
         return Pager(
             config = PagingConfig(pageSize = Constants.MOVIE_PAGE_SIZE),
-            remoteMediator = MovieListRemoteMediator(
-                databaseRepository = databaseRepository,
-                networkRepository = networkRepository,
-            ),
+            remoteMediator = movieListRemoteMediator,
             pagingSourceFactory = {
                 databaseRepository.moviePagingSource()
             },

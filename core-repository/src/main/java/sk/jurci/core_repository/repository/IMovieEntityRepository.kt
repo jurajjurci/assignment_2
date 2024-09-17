@@ -6,5 +6,5 @@ import sk.jurci.core_database.model.MovieEntity
 
 interface IMovieEntityRepository {
 
-    fun getPopularMovies(): Flow<PagingData<MovieEntity>>
+    fun getPopularMovies(language: String): Flow<PagingData<MovieEntity>>
 }
