@@ -32,15 +32,15 @@ internal class MovieListRemoteMediator @Inject constructor(
         state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try {
-            val (currentPage, currentOrder) = when (loadType) {
-                LoadType.REFRESH -> 1 to 0L
+            val currentPaging: Paging = when (loadType) {
+                LoadType.REFRESH -> Paging()
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val lastItem = state.lastItemOrNull()
                     if (lastItem == null) {
-                        1 to 0L
+                        Paging()
                     } else {
-                        lastItem.page.inc() to lastItem.order.inc()
+                        Paging(lastItem)
                     }
                 }
             }
@@ -48,24 +48,26 @@ internal class MovieListRemoteMediator @Inject constructor(
             val popularMovieResponse = withContext(ioDispatcher) {
                 apiService.getPopularMovieList(
                     language = LANGUAGE,
-                    page = currentPage,
+                    page = currentPaging.page,
                 )
             }
 
-            var order = currentOrder
             withContext(ioDispatcher) {
                 appDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH) {
                         appDatabase.movieDao.clearAll()
                     }
                     appDatabase.movieDao.upsertAll(popularMovieResponse.results.map {
-                        it.toEntity(currentPage, order++)
+                        it.toEntity(
+                            page = currentPaging.page,
+                            order = currentPaging.itemOrder,
+                        )
                     })
                 }
             }
 
             return MediatorResult.Success(
-                endOfPaginationReached = currentPage == popularMovieResponse.totalPages,
+                endOfPaginationReached = currentPaging.page == popularMovieResponse.totalPages,
             )
         } catch (exception: IOException) {
             MediatorResult.Error(exception)
