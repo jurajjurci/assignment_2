@@ -8,4 +8,9 @@
     <string name="movie_list_favourite_icon_filled">Filled heart</string>
 
     <string name="movie_detail_button_back">Back to movie list</string>
+    <string name="movie_detail_label_for_adults">18+</string>
+    <string name="movie_detail_label_rating">Rating</string>
+    <string name="movie_detail_label_release_date">Released</string>
+    <string name="movie_detail_label_original_title">Original title</string>
+    <string name="movie_detail_label_original_language">Original language</string>
 </resources>
