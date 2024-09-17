@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,7 +50,9 @@ fun MovieDetailUiPreview() {
             MovieDetailUi(
                 animatedVisibilityScope = this,
                 movie = Movie.DEMO_MOVIE,
+                isMovieFavourite = false,
                 onBackPressed = {},
+                onFavouriteButtonClick = {},
             )
         }
     }
@@ -58,7 +63,9 @@ fun MovieDetailUiPreview() {
 fun SharedTransitionScope.MovieDetailUi(
     animatedVisibilityScope: AnimatedVisibilityScope,
     movie: Movie,
+    isMovieFavourite: Boolean,
     onBackPressed: () -> Unit,
+    onFavouriteButtonClick: (Boolean) -> Unit,
 ) {
     BackHandler { onBackPressed() }
     val scrollBehavior = pinnedScrollBehavior()
@@ -77,6 +84,25 @@ fun SharedTransitionScope.MovieDetailUi(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(id = R.string.movie_detail_button_back),
                         )
+                    }
+                },
+                actions = {
+                    if (isMovieFavourite) {
+                        IconButton(onClick = { onFavouriteButtonClick(false) }) {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = stringResource(R.string.movie_detail_button_remove_from_favourite),
+                                modifier = Modifier.size(Dimensions.iconSize)
+                            )
+                        }
+                    } else {
+                        IconButton(onClick = { onFavouriteButtonClick(true) }) {
+                            Icon(
+                                imageVector = Icons.Default.FavoriteBorder,
+                                contentDescription = stringResource(R.string.movie_detail_button_add_to_favourite),
+                                modifier = Modifier.size(Dimensions.iconSize)
+                            )
+                        }
                     }
                 },
                 scrollBehavior = scrollBehavior,

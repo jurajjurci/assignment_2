@@ -15,6 +15,8 @@ import kotlinx.serialization.Serializable
 import sk.jurci.assignment_2.utils.parcelableType
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.feature_movie.movie_detail.MovieDetailUi
+import sk.jurci.feature_movie.movie_detail.MovieDetailViewModel
+import sk.jurci.feature_movie.movie_detail.MovieDetailViewModelFactory
 import sk.jurci.feature_movie.movie_list.MovieListUi
 import sk.jurci.feature_movie.movie_list.MovieListViewModel
 import sk.jurci.feature_settings.info.InfoUi
@@ -55,10 +57,21 @@ fun NavigationCompose() {
                 typeMap = mapOf(typeOf<Movie>() to parcelableType<Movie>())
             ) { backStackEntry ->
                 val movieRoute = backStackEntry.toRoute<Screen.MovieDetail>()
+                val movie = movieRoute.movie
+                val viewModel = hiltViewModel<MovieDetailViewModel, MovieDetailViewModelFactory> {
+                    it.create(movie.favourite)
+                }
                 MovieDetailUi(
                     animatedVisibilityScope = this,
-                    movie = movieRoute.movie,
+                    movie = movie,
+                    isMovieFavourite = viewModel.isMovieFavourite,
                     onBackPressed = navController::popBackStack,
+                    onFavouriteButtonClick = { favourite ->
+                        viewModel.markMovieAsFavourite(
+                            movieId = movie.id,
+                            favourite = favourite,
+                        )
+                    }
                 )
             }
 

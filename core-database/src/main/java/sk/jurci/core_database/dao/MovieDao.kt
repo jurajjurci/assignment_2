@@ -15,6 +15,9 @@ internal interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movie: MovieEntity)
 
+    @Query("SELECT * FROM movies WHERE id like :movieId")
+    suspend fun getMovieEntity(movieId: Long): MovieEntity
+
     @Upsert
     suspend fun upsertAll(movies: List<MovieEntity>)
 

@@ -27,9 +27,11 @@ class Module {
     internal fun providesMovieEntityRepository(
         pager: Pager<Int, MovieEntity>,
         movieListRemoteMediator: MovieListRemoteMediator,
+        databaseRepository: IDatabaseRepository,
     ): IMovieEntityRepository = MovieEntityRepository(
         pager = pager,
-        movieListRemoteMediator = movieListRemoteMediator
+        movieListRemoteMediator = movieListRemoteMediator,
+        databaseRepository = databaseRepository,
     )
 
     @Provides

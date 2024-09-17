@@ -9,6 +9,7 @@ internal object Dimensions {
     val paddingExtraLarge = 32.dp
 
     val elevation = 4.dp
+    val iconSize = 24.dp
 
     object MovieCard {
         private const val RATIO = 1.5f

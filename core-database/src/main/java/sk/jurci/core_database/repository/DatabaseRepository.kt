@@ -23,6 +23,16 @@ internal class DatabaseRepository(
         }
     }
 
+    override suspend fun markMovieAsFavourite(movieId: Long, favourite: Boolean) {
+        withContext(ioDispatcher) {
+            appDatabase.withTransaction {
+                val movieEntity = appDatabase.movieDao.getMovieEntity(movieId = movieId)
+                movieEntity.favourite = favourite
+                appDatabase.movieDao.insert(movieEntity)
+            }
+        }
+    }
+
     override fun moviePagingSource(): PagingSource<Int, MovieEntity> {
         return appDatabase.movieDao.pagingSource()
     }
