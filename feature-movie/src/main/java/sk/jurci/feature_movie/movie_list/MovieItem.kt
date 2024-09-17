@@ -39,14 +39,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
+import sk.jurci.core_repository.model.image.PosterSize
 import sk.jurci.feature_movie.R
 import sk.jurci.feature_movie.ui.theme.Dimensions
-import sk.jurci.feature_movie.utils.Constants
-import sk.jurci.feature_movie.utils.convertPosterPathToImageUrl
 
 @Preview
 @Composable
-fun MovieItemPreview() {
+internal fun MovieItemPreview() {
     MovieItem(
         modifier = Modifier.width(Dimensions.MovieCard.width),
         movie = DEMO_MOVIE,
@@ -55,7 +54,7 @@ fun MovieItemPreview() {
 }
 
 @Composable
-fun MovieItem(
+internal fun MovieItem(
     modifier: Modifier = Modifier,
     movie: Movie,
     onItemClick: (Movie) -> Unit,
@@ -77,7 +76,7 @@ fun MovieItem(
             }) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = convertPosterPathToImageUrl(movie.posterPath, Constants.PosterUrlSize.w154),
+                model = movie.posterPath.toUrl(PosterSize.W_154),
                 contentScale = ContentScale.Crop,
                 contentDescription = movie.title,
             )
@@ -146,7 +145,7 @@ private fun Title(
 }
 
 @Composable
-fun FavouriteIcon(
+private fun FavouriteIcon(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     description: String,

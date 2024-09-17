@@ -2,6 +2,7 @@
 
 package sk.jurci.feature_movie.movie_list
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,17 +22,20 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -45,7 +49,7 @@ import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview
 @Composable
-fun MovieListUiPreview() {
+internal fun MovieListUiPreview() {
     val movieList = flow {
         emit(
             PagingData.from(
@@ -85,21 +89,23 @@ fun MovieListUi(
         onRefresh = { movieList.refresh() },
     )
 
+    val scrollBehavior = enterAlwaysScrollBehavior()
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(key1 = movieList.loadState.refresh, key2 = movieList.loadState.append) {
-        if (movieList.itemCount > 0 && (movieList.loadState.append is LoadState.Error || movieList.loadState.refresh is LoadState.Error)) {
+        if (movieList.itemCount > 0 && movieList.loadState.isError) {
             scope.launch {
-                snackBarHostState.showSnackbar(
-                    message = context.getString(R.string.movie_list_error),
-                    actionLabel = context.getString(R.string.movie_list_snack_bar_close),
-                    duration = SnackbarDuration.Indefinite,
-                )
+                snackBarHostState.showErrorSnackBar(context)
             }
         }
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = stringResource(R.string.movie_list_title)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.movie_list_title)) },
+                scrollBehavior = scrollBehavior,
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
     ) { innerPadding ->
         Box(
@@ -109,18 +115,18 @@ fun MovieListUi(
                 .pullRefresh(pullRefreshState)
         ) {
             if (movieList.loadState.refresh is LoadState.Error && movieList.itemCount == 0) {
-                val scrollState = rememberScrollState()
                 ErrorMessage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(scrollState),
-                    message = stringResource(R.string.movie_list_error_empty),
+                        .verticalScroll(rememberScrollState()),
                 )
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(columnsCount),
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(Dimensions.paddingMedium)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    contentPadding = PaddingValues(Dimensions.paddingMedium),
                 ) {
                     items(movieList.itemCount) { index ->
                         movieList[index]?.let { movie ->
@@ -151,4 +157,15 @@ fun MovieListUi(
 
 private fun loadingItemsCount(moviesCount: Int, columnsCount: Int): Int {
     return columnsCount - moviesCount.mod(columnsCount)
+}
+
+private val CombinedLoadStates.isError: Boolean
+    get() = this.append is LoadState.Error || this.refresh is LoadState.Error
+
+private suspend fun SnackbarHostState.showErrorSnackBar(context: Context) {
+    showSnackbar(
+        message = context.getString(R.string.movie_list_error),
+        actionLabel = context.getString(R.string.movie_list_snack_bar_close),
+        duration = SnackbarDuration.Indefinite,
+    )
 }

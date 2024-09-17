@@ -49,9 +49,6 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
 
-    // Room
-    implementation(libs.androidx.room.ktx)
-
     implementation(libs.androidx.paging.runtime.ktx)
 
     testImplementation(libs.junit)

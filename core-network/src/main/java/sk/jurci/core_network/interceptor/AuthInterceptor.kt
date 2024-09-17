@@ -4,7 +4,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import sk.jurci.core_network.BuildConfig
 
-class AuthInterceptor : Interceptor {
+internal class AuthInterceptor : Interceptor {
 
     private companion object {
         private const val AUTHORIZATION = "Authorization"
