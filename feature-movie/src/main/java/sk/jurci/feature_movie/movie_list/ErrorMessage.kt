@@ -7,7 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import sk.jurci.feature_movie.R
 
 @Preview
 @Composable
@@ -21,7 +23,7 @@ internal fun ErrorMessagePreview() {
 @Composable
 internal fun ErrorMessage(
     modifier: Modifier = Modifier,
-    message: String,
+    message: String = stringResource(R.string.movie_list_error_empty),
 ) {
     Column(
         modifier = modifier,

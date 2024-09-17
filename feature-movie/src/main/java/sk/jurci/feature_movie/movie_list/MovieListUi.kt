@@ -2,6 +2,7 @@
 
 package sk.jurci.feature_movie.movie_list
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -90,13 +92,9 @@ fun MovieListUi(
     val scrollBehavior = enterAlwaysScrollBehavior()
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(key1 = movieList.loadState.refresh, key2 = movieList.loadState.append) {
-        if (movieList.itemCount > 0 && (movieList.loadState.append is LoadState.Error || movieList.loadState.refresh is LoadState.Error)) {
+        if (movieList.itemCount > 0 && movieList.loadState.isError) {
             scope.launch {
-                snackBarHostState.showSnackbar(
-                    message = context.getString(R.string.movie_list_error),
-                    actionLabel = context.getString(R.string.movie_list_snack_bar_close),
-                    duration = SnackbarDuration.Indefinite,
-                )
+                snackBarHostState.showErrorSnackBar(context)
             }
         }
     }
@@ -117,12 +115,10 @@ fun MovieListUi(
                 .pullRefresh(pullRefreshState)
         ) {
             if (movieList.loadState.refresh is LoadState.Error && movieList.itemCount == 0) {
-                val scrollState = rememberScrollState()
                 ErrorMessage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(scrollState),
-                    message = stringResource(R.string.movie_list_error_empty),
+                        .verticalScroll(rememberScrollState()),
                 )
             } else {
                 LazyVerticalGrid(
@@ -161,4 +157,15 @@ fun MovieListUi(
 
 private fun loadingItemsCount(moviesCount: Int, columnsCount: Int): Int {
     return columnsCount - moviesCount.mod(columnsCount)
+}
+
+private val CombinedLoadStates.isError: Boolean
+    get() = this.append is LoadState.Error || this.refresh is LoadState.Error
+
+private suspend fun SnackbarHostState.showErrorSnackBar(context: Context) {
+    showSnackbar(
+        message = context.getString(R.string.movie_list_error),
+        actionLabel = context.getString(R.string.movie_list_snack_bar_close),
+        duration = SnackbarDuration.Indefinite,
+    )
 }
