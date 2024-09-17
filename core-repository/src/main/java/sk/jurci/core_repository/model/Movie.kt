@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import sk.jurci.core_repository.model.image.BackdropPath
 import sk.jurci.core_repository.model.image.PosterPath
+import sk.jurci.core_repository.util.UrlEncodedStringSerializer
 
 @Serializable
 @Parcelize
@@ -20,6 +21,7 @@ data class Movie(
 
     val originalTitle: String,
 
+    @Serializable(with = UrlEncodedStringSerializer::class)
     val overview: String,
 
     val popularity: Double,
