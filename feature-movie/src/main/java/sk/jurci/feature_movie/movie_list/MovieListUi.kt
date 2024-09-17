@@ -64,11 +64,15 @@ fun MovieListUiPreview() {
     }.collectAsLazyPagingItems()
     MovieListUi(
         movieList = movieList,
+        onMovieItemClick = {},
     )
 }
 
 @Composable
-fun MovieListUi(movieList: LazyPagingItems<Movie>) {
+fun MovieListUi(
+    movieList: LazyPagingItems<Movie>,
+    onMovieItemClick: (Movie) -> Unit,
+) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -119,7 +123,12 @@ fun MovieListUi(movieList: LazyPagingItems<Movie>) {
                     contentPadding = PaddingValues(Dimensions.paddingMedium)
                 ) {
                     items(movieList.itemCount) { index ->
-                        movieList[index]?.let { movie -> MovieItem(movie = movie) }
+                        movieList[index]?.let { movie ->
+                            MovieItem(
+                                movie = movie,
+                                onItemClick = onMovieItemClick,
+                            )
+                        }
                     }
                     if (movieList.loadState.append is LoadState.Loading) {
                         repeat(loadingItemsCount(movieList.itemCount, columnsCount)) {
