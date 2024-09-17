@@ -1,4 +1,4 @@
-package sk.jurci.feature_movie.movie_detail
+package sk.jurci.feature_movie.movie_detail.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package sk.jurci.feature_movie.movie_list
+package sk.jurci.feature_movie.movie_list.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

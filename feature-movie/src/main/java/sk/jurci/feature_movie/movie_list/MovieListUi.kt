@@ -52,6 +52,9 @@ import kotlinx.coroutines.launch
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
 import sk.jurci.feature_movie.R
+import sk.jurci.feature_movie.movie_list.ui.ErrorMessage
+import sk.jurci.feature_movie.movie_list.ui.LoadingItem
+import sk.jurci.feature_movie.movie_list.ui.MovieItem
 import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview

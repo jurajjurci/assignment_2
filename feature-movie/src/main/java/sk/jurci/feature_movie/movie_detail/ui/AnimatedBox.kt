@@ -1,4 +1,4 @@
-package sk.jurci.feature_movie.movie_detail
+package sk.jurci.feature_movie.movie_detail.ui
 
 import android.content.Context
 import androidx.compose.animation.core.LinearEasing
