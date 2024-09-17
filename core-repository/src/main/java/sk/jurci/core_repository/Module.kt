@@ -42,12 +42,14 @@ class Module {
     @Provides
     @Singleton
     fun provideMoviePager(
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
         appDatabase: AppDatabase,
         apiService: ApiService,
     ): Pager<Int, MovieEntity> {
         return Pager(
             config = PagingConfig(pageSize = Constants.MOVIE_PAGE_SIZE),
             remoteMediator = MovieListRemoteMediator(
+                ioDispatcher = ioDispatcher,
                 appDatabase = appDatabase,
                 apiService = apiService,
             ),

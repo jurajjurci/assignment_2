@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="movie_list_title">Popular movies</string>
+    <string name="movie_list_error">An error occurred, try again later…</string>
+    <string name="movie_list_error_empty">An error occurred, the movie list is empty.</string>
+    <string name="movie_list_snack_bar_close">Close</string>
+    <string name="movie_list_favourite_icon_empty">Empty heart</string>
+    <string name="movie_list_favourite_icon_filled">Filled heart</string>
 </resources>

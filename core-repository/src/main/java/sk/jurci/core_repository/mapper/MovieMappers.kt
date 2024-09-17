@@ -21,7 +21,7 @@ fun MovieEntity.toUiModel() = Movie(
     favourite = this.favourite,
 )
 
-fun MovieDto.toEntity(page: Int) = MovieEntity(
+fun MovieDto.toEntity(page: Int, order: Long) = MovieEntity(
     id = this.id,
     adult = this.adult,
     backdropPath = this.backdropPath,
@@ -36,5 +36,6 @@ fun MovieDto.toEntity(page: Int) = MovieEntity(
     voteAverage = this.voteAverage,
     voteCount = this.voteCount,
     page = page,
+    order = order,
     favourite = false,
 )

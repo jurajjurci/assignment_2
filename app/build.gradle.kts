@@ -66,10 +66,12 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.paging.compose)
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
     ksp(libs.androidx.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation)
 
     implementation(libs.timber)
 

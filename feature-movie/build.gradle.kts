@@ -51,13 +51,17 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
     ksp(libs.androidx.dagger.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
