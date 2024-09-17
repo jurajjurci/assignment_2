@@ -31,4 +31,4 @@ google-services.json
 
 # Android Profiling
 *.hprof
-core-database
+core-database/schemas
