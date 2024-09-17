@@ -2,7 +2,7 @@ package sk.jurci.feature_movie.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-object Dimensions {
+internal object Dimensions {
     val paddingSmall = 8.dp
     val paddingMedium = 16.dp
     val paddingLarge = 24.dp

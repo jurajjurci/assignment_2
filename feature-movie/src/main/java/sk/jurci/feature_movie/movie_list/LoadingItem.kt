@@ -17,14 +17,14 @@ import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview
 @Composable
-fun LoadingItemPreview() {
+internal fun LoadingItemPreview() {
     LoadingItem(
         modifier = Modifier.width(Dimensions.MovieCard.width),
     )
 }
 
 @Composable
-fun LoadingItem(modifier: Modifier = Modifier) {
+internal fun LoadingItem(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .padding(Dimensions.paddingSmall)

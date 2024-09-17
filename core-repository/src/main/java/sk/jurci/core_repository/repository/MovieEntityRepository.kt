@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import sk.jurci.core_database.model.MovieEntity
 
-class MovieEntityRepository(
+internal class MovieEntityRepository(
     private val pager: Pager<Int, MovieEntity>,
 ) : IMovieEntityRepository {
 

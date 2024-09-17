@@ -6,21 +6,16 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import sk.jurci.core_database.AppDatabase
 import sk.jurci.core_database.model.MovieEntity
-import sk.jurci.core_network.ApiService
+import sk.jurci.core_database.repository.IDatabaseRepository
+import sk.jurci.core_network.repository.INetworkRepository
 import sk.jurci.core_repository.mapper.toEntity
 import java.io.IOException
-import javax.inject.Inject
 
-class MovieListRemoteMediator @Inject constructor(
-    private val ioDispatcher: CoroutineDispatcher,
-    private val appDatabase: AppDatabase,
-    private val apiService: ApiService,
+internal class MovieListRemoteMediator(
+    private val databaseRepository: IDatabaseRepository,
+    private val networkRepository: INetworkRepository,
 ) : RemoteMediator<Int, MovieEntity>() {
 
     private companion object {
@@ -32,40 +27,36 @@ class MovieListRemoteMediator @Inject constructor(
         state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try {
-            val (currentPage, currentOrder) = when (loadType) {
-                LoadType.REFRESH -> 1 to 0L
+            val currentPaging: Paging = when (loadType) {
+                LoadType.REFRESH -> Paging()
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val lastItem = state.lastItemOrNull()
                     if (lastItem == null) {
-                        1 to 0L
+                        Paging()
                     } else {
-                        lastItem.page.inc() to lastItem.order.inc()
+                        Paging(lastItem)
                     }
                 }
             }
 
-            val popularMovieResponse = withContext(ioDispatcher) {
-                apiService.getPopularMovieList(
-                    language = LANGUAGE,
-                    page = currentPage,
-                )
-            }
+            val popularMovieResponse = networkRepository.getPopularMovieList(
+                language = LANGUAGE,
+                page = currentPaging.page,
+            )
 
-            var order = currentOrder
-            withContext(ioDispatcher) {
-                appDatabase.withTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        appDatabase.movieDao.clearAll()
-                    }
-                    appDatabase.movieDao.upsertAll(popularMovieResponse.results.map {
-                        it.toEntity(currentPage, order++)
-                    })
-                }
-            }
+            databaseRepository.insertAll(
+                movieList = popularMovieResponse.results.map {
+                    it.toEntity(
+                        page = currentPaging.page,
+                        order = currentPaging.itemOrder,
+                    )
+                },
+                clear = loadType == LoadType.REFRESH,
+            )
 
             return MediatorResult.Success(
-                endOfPaginationReached = currentPage == popularMovieResponse.totalPages,
+                endOfPaginationReached = currentPaging.page == popularMovieResponse.totalPages,
             )
         } catch (exception: IOException) {
             MediatorResult.Error(exception)

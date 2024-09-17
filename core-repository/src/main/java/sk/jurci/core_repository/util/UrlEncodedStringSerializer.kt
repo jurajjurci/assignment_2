@@ -10,7 +10,7 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-class UrlEncodedStringSerializer : KSerializer<String> {
+internal class UrlEncodedStringSerializer : KSerializer<String> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("UrlEncodedString", PrimitiveKind.STRING)
 
