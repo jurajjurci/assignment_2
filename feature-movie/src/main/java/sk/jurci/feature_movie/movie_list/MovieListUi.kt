@@ -21,12 +21,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -85,6 +87,7 @@ fun MovieListUi(
         onRefresh = { movieList.refresh() },
     )
 
+    val scrollBehavior = enterAlwaysScrollBehavior()
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(key1 = movieList.loadState.refresh, key2 = movieList.loadState.append) {
         if (movieList.itemCount > 0 && (movieList.loadState.append is LoadState.Error || movieList.loadState.refresh is LoadState.Error)) {
@@ -99,7 +102,12 @@ fun MovieListUi(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = stringResource(R.string.movie_list_title)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.movie_list_title)) },
+                scrollBehavior = scrollBehavior,
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
     ) { innerPadding ->
         Box(
@@ -119,8 +127,10 @@ fun MovieListUi(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(columnsCount),
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(Dimensions.paddingMedium)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    contentPadding = PaddingValues(Dimensions.paddingMedium),
                 ) {
                     items(movieList.itemCount) { index ->
                         movieList[index]?.let { movie ->
