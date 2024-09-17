@@ -1,4 +1,4 @@
-package sk.jurci.core_repository.model.image
+package sk.jurci.feature_movie.model.image
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,4 +1,4 @@
-package sk.jurci.core_repository.model.image
+package sk.jurci.feature_movie.model.image
 
 enum class BackdropSize {
     W_300(), W_780, W_1280, ORIGINAL;

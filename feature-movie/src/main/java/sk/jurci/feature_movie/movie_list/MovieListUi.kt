@@ -49,8 +49,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import sk.jurci.core_repository.model.Movie
-import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
+import sk.jurci.feature_movie.model.Movie
+import sk.jurci.feature_movie.model.Movie.Companion.DEMO_MOVIE
 import sk.jurci.feature_movie.R
 import sk.jurci.feature_movie.movie_list.ui.ErrorMessage
 import sk.jurci.feature_movie.movie_list.ui.LoadingItem

@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import sk.jurci.core_repository.model.Movie
+import sk.jurci.feature_movie.model.Movie
 import sk.jurci.feature_movie.R
 import sk.jurci.feature_movie.movie_detail.ui.Content
 import sk.jurci.feature_movie.movie_detail.ui.Header
@@ -69,7 +69,6 @@ fun SharedTransitionScope.MovieDetailUi(
 ) {
     BackHandler { onBackPressed() }
     val scrollBehavior = pinnedScrollBehavior()
-
 
     Scaffold(
         modifier = Modifier

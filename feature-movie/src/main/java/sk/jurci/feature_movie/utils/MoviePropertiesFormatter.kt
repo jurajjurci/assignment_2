@@ -1,6 +1,6 @@
 package sk.jurci.feature_movie.utils
 
-import sk.jurci.core_repository.model.Movie
+import sk.jurci.feature_movie.model.Movie
 import java.text.SimpleDateFormat
 import java.util.Locale
 

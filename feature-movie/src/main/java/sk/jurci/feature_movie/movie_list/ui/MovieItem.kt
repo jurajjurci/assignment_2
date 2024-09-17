@@ -45,9 +45,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import sk.jurci.core_repository.model.Movie
-import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
-import sk.jurci.core_repository.model.image.PosterSize
+import sk.jurci.feature_movie.model.Movie
+import sk.jurci.feature_movie.model.Movie.Companion.DEMO_MOVIE
+import sk.jurci.feature_movie.model.image.PosterSize
 import sk.jurci.feature_movie.R
 import sk.jurci.feature_movie.ui.theme.Constants
 import sk.jurci.feature_movie.ui.theme.Dimensions

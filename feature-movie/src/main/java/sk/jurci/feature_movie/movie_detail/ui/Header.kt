@@ -28,9 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import sk.jurci.core_repository.model.Movie
-import sk.jurci.core_repository.model.image.BackdropSize
-import sk.jurci.core_repository.model.image.PosterSize
+import sk.jurci.feature_movie.model.Movie
+import sk.jurci.feature_movie.model.image.BackdropSize
+import sk.jurci.feature_movie.model.image.PosterSize
 import sk.jurci.feature_movie.R
 import sk.jurci.feature_movie.utils.formattedReleaseDate
 import sk.jurci.feature_movie.utils.rating

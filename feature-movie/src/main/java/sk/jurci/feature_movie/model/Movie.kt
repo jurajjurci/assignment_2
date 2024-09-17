@@ -1,11 +1,11 @@
-package sk.jurci.core_repository.model
+package sk.jurci.feature_movie.model
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
-import sk.jurci.core_repository.model.image.BackdropPath
-import sk.jurci.core_repository.model.image.PosterPath
-import sk.jurci.core_repository.util.UrlEncodedStringSerializer
+import kotlinx.parcelize.Parcelize
+import sk.jurci.feature_movie.model.image.BackdropPath
+import sk.jurci.feature_movie.model.image.PosterPath
+import sk.jurci.feature_movie.utils.UrlEncodedStringSerializer
 
 @Serializable
 @Parcelize
