@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import sk.jurci.core_repository.model.Movie
 import sk.jurci.feature_movie.R
-import sk.jurci.feature_movie.tuils.formattedOriginalLanguage
+import sk.jurci.feature_movie.utils.formattedOriginalLanguage
 import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview

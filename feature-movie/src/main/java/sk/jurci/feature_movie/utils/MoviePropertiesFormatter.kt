@@ -1,4 +1,4 @@
-package sk.jurci.feature_movie.tuils
+package sk.jurci.feature_movie.utils
 
 import sk.jurci.core_repository.model.Movie
 import java.text.SimpleDateFormat
