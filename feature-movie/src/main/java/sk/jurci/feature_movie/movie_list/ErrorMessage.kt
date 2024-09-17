@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-fun ErrorMessagePreview() {
+internal fun ErrorMessagePreview() {
     ErrorMessage(
         modifier = Modifier.fillMaxSize(),
         message = "This is error message",
@@ -19,7 +19,7 @@ fun ErrorMessagePreview() {
 }
 
 @Composable
-fun ErrorMessage(
+internal fun ErrorMessage(
     modifier: Modifier = Modifier,
     message: String,
 ) {

@@ -47,7 +47,7 @@ import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview
 @Composable
-fun MovieListUiPreview() {
+internal fun MovieListUiPreview() {
     val movieList = flow {
         emit(
             PagingData.from(

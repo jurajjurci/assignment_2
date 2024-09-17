@@ -45,7 +45,7 @@ import sk.jurci.feature_movie.ui.theme.Dimensions
 
 @Preview
 @Composable
-fun MovieItemPreview() {
+internal fun MovieItemPreview() {
     MovieItem(
         modifier = Modifier.width(Dimensions.MovieCard.width),
         movie = DEMO_MOVIE,
@@ -54,7 +54,7 @@ fun MovieItemPreview() {
 }
 
 @Composable
-fun MovieItem(
+internal fun MovieItem(
     modifier: Modifier = Modifier,
     movie: Movie,
     onItemClick: (Movie) -> Unit,
@@ -145,7 +145,7 @@ private fun Title(
 }
 
 @Composable
-fun FavouriteIcon(
+private fun FavouriteIcon(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     description: String,

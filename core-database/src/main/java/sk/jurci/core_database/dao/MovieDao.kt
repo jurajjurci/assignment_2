@@ -10,7 +10,7 @@ import androidx.room.Upsert
 import sk.jurci.core_database.model.MovieEntity
 
 @Dao
-interface MovieDao {
+internal interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movie: MovieEntity)

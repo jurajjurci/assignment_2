@@ -1,4 +1,4 @@
-package sk.jurci.core_network
+package sk.jurci.core_network.service
 
 import retrofit2.http.GET
 import retrofit2.http.Query

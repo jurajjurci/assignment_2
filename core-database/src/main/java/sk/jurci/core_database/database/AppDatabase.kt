@@ -1,4 +1,4 @@
-package sk.jurci.core_database
+package sk.jurci.core_database.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -14,7 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
         const val DATABASE_NAME = "Movie"
     }
 
-    abstract val movieDao: MovieDao
+    internal abstract val movieDao: MovieDao
 
-    abstract val movieIdToGenreIdDao: MovieIdToGenreIdDao
+    internal abstract val movieIdToGenreIdDao: MovieIdToGenreIdDao
 }

@@ -9,52 +9,39 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import sk.jurci.core_database.AppDatabase
 import sk.jurci.core_database.model.MovieEntity
-import sk.jurci.core_network.ApiService
+import sk.jurci.core_database.repository.IDatabaseRepository
+import sk.jurci.core_network.repository.INetworkRepository
 import sk.jurci.core_repository.repository.IMovieEntityRepository
 import sk.jurci.core_repository.repository.MovieEntityRepository
 import sk.jurci.core_repository.mediator.MovieListRemoteMediator
 import sk.jurci.core_repository.util.Constants
-import javax.inject.Qualifier
 import javax.inject.Singleton
-
-@Qualifier
-annotation class IoDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
 class Module {
 
-    @Singleton
-    @Provides
-    @IoDispatcher
-    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
     @Provides
     @Singleton
-    internal fun provideMovieEntityRepository(
+    internal fun providesMovieEntityRepository(
         pager: Pager<Int, MovieEntity>,
     ): IMovieEntityRepository = MovieEntityRepository(pager = pager)
 
     @Provides
     @Singleton
-    fun provideMoviePager(
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
-        appDatabase: AppDatabase,
-        apiService: ApiService,
+    fun providesMoviePager(
+        databaseRepository: IDatabaseRepository,
+        networkRepository: INetworkRepository
     ): Pager<Int, MovieEntity> {
         return Pager(
             config = PagingConfig(pageSize = Constants.MOVIE_PAGE_SIZE),
             remoteMediator = MovieListRemoteMediator(
-                ioDispatcher = ioDispatcher,
-                appDatabase = appDatabase,
-                apiService = apiService,
+                databaseRepository = databaseRepository,
+                networkRepository = networkRepository,
             ),
             pagingSourceFactory = {
-                appDatabase.movieDao.pagingSource()
+                databaseRepository.moviePagingSource()
             },
         )
     }
