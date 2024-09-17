@@ -12,7 +12,7 @@ import sk.jurci.core_repository.model.Movie
 fun MovieDetailUi(movie: Movie) {
     Scaffold { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Text(text = "Movie Detail screen")
+            Text(text = movie.title)
         }
     }
 }
