@@ -1,8 +1,15 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
+    ExperimentalSharedTransitionApi::class
+)
 
 package sk.jurci.feature_movie.movie_list
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -66,14 +73,20 @@ internal fun MovieListUiPreview() {
             )
         )
     }.collectAsLazyPagingItems()
-    MovieListUi(
-        movieList = movieList,
-        onMovieItemClick = {},
-    )
+    SharedTransitionLayout {
+        AnimatedVisibility(visible = true) {
+            MovieListUi(
+                animatedVisibilityScope = this,
+                movieList = movieList,
+                onMovieItemClick = {},
+            )
+        }
+    }
 }
 
 @Composable
-fun MovieListUi(
+fun SharedTransitionScope.MovieListUi(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     movieList: LazyPagingItems<Movie>,
     onMovieItemClick: (Movie) -> Unit,
 ) {
@@ -100,6 +113,7 @@ fun MovieListUi(
     }
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(R.string.movie_list_title)) },
@@ -123,14 +137,13 @@ fun MovieListUi(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(columnsCount),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(Dimensions.paddingMedium),
                 ) {
                     items(movieList.itemCount) { index ->
                         movieList[index]?.let { movie ->
                             MovieItem(
+                                animatedVisibilityScope = animatedVisibilityScope,
                                 movie = movie,
                                 onItemClick = onMovieItemClick,
                             )

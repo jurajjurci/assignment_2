@@ -19,4 +19,12 @@ internal object Dimensions {
     object FavouriteIcon {
         val size = 36.dp
     }
+
+    object MovieDetail {
+        val backdropImageHeight = 150.dp
+
+        private const val RATIO = 1.5f
+        val posterImageWidth = 120.dp
+        val posterImageHeight = posterImageWidth * RATIO
+    }
 }

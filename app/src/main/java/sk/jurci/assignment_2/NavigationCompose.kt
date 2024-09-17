@@ -1,5 +1,9 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package sk.jurci.assignment_2
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -33,26 +37,34 @@ object Screen {
 
 @Composable
 fun NavigationCompose() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MovieList) {
-        composable<Screen.MovieList> {
-            val viewModel = hiltViewModel<MovieListViewModel>()
-            val movieList = viewModel.popularMovieList.collectAsLazyPagingItems()
-            MovieListUi(
-                movieList = movieList,
-                onMovieItemClick = { movie -> navController.navigate(Screen.MovieDetail(movie)) }
-            )
+    SharedTransitionLayout {
+        val navController = rememberNavController()
+
+        NavHost(navController = navController, startDestination = Screen.MovieList) {
+            composable<Screen.MovieList> {
+                val viewModel = hiltViewModel<MovieListViewModel>()
+                val movieList = viewModel.popularMovieList.collectAsLazyPagingItems()
+                MovieListUi(
+                    animatedVisibilityScope = this,
+                    movieList = movieList,
+                    onMovieItemClick = { movie -> navController.navigate(Screen.MovieDetail(movie)) }
+                )
+            }
+
+            composable<Screen.MovieDetail>(
+                typeMap = mapOf(typeOf<Movie>() to parcelableType<Movie>())
+            ) { backStackEntry ->
+                val movieRoute = backStackEntry.toRoute<Screen.MovieDetail>()
+                MovieDetailUi(
+                    animatedVisibilityScope = this,
+                    movie = movieRoute.movie,
+                    onBackPressed = navController::popBackStack,
+                )
+            }
+
+            composable<Screen.Settings> { SettingsUi() }
+
+            composable<Screen.Info> { InfoUi() }
         }
-
-        composable<Screen.MovieDetail>(
-            typeMap = mapOf(typeOf<Movie>() to parcelableType<Movie>())
-        ) { backStackEntry ->
-            val movie = backStackEntry.toRoute<Screen.MovieDetail>()
-            MovieDetailUi(movie.movie)
-        }
-
-        composable<Screen.Settings> { SettingsUi() }
-
-        composable<Screen.Info> { InfoUi() }
     }
 }

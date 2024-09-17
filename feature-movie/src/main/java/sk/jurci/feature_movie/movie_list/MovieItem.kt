@@ -1,5 +1,13 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package sk.jurci.feature_movie.movie_list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -41,21 +49,29 @@ import sk.jurci.core_repository.model.Movie
 import sk.jurci.core_repository.model.Movie.Companion.DEMO_MOVIE
 import sk.jurci.core_repository.model.image.PosterSize
 import sk.jurci.feature_movie.R
+import sk.jurci.feature_movie.ui.theme.Constants
 import sk.jurci.feature_movie.ui.theme.Dimensions
+import sk.jurci.feature_movie.ui.theme.posterTransactionKey
 
 @Preview
 @Composable
 internal fun MovieItemPreview() {
-    MovieItem(
-        modifier = Modifier.width(Dimensions.MovieCard.width),
-        movie = DEMO_MOVIE,
-        onItemClick = {},
-    )
+    SharedTransitionLayout {
+        AnimatedVisibility(visible = true) {
+            MovieItem(
+                modifier = Modifier.width(Dimensions.MovieCard.width),
+                animatedVisibilityScope = this,
+                movie = DEMO_MOVIE,
+                onItemClick = {},
+            )
+        }
+    }
 }
 
 @Composable
-internal fun MovieItem(
+internal fun SharedTransitionScope.MovieItem(
     modifier: Modifier = Modifier,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     movie: Movie,
     onItemClick: (Movie) -> Unit,
 ) {
@@ -75,7 +91,15 @@ internal fun MovieItem(
                 onItemClick(movie)
             }) {
             AsyncImage(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .sharedElement(
+                        state = rememberSharedContentState(key = movie.posterTransactionKey),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(durationMillis = Constants.TRANSACTION_ANIMATION_DURATION)
+                        }
+                    ),
                 model = movie.posterPath.toUrl(PosterSize.W_154),
                 contentScale = ContentScale.Crop,
                 contentDescription = movie.title,

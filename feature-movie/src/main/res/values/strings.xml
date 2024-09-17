@@ -6,4 +6,6 @@
     <string name="movie_list_snack_bar_close">Close</string>
     <string name="movie_list_favourite_icon_empty">Empty heart</string>
     <string name="movie_list_favourite_icon_filled">Filled heart</string>
+
+    <string name="movie_detail_button_back">Back to movie list</string>
 </resources>
