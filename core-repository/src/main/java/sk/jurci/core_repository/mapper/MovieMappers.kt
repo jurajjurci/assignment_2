@@ -4,7 +4,7 @@ import sk.jurci.core_database.model.MovieEntity
 import sk.jurci.core_network.model.MovieDto
 import sk.jurci.core_repository.model.Movie
 
-fun MovieEntity.toUiModel() = Movie(
+internal fun MovieEntity.toUiModel() = Movie(
     id = this.id,
     adult = this.adult,
     backdropPath = this.backdropPath,
@@ -21,7 +21,7 @@ fun MovieEntity.toUiModel() = Movie(
     favourite = this.favourite,
 )
 
-fun MovieDto.toEntity(page: Int, order: Long) = MovieEntity(
+internal fun MovieDto.toEntity(page: Int, order: Long) = MovieEntity(
     id = this.id,
     adult = this.adult,
     backdropPath = this.backdropPath,

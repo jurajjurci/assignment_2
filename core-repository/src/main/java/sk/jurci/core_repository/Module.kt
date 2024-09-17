@@ -35,7 +35,7 @@ class Module {
 
     @Provides
     @Singleton
-    fun provideMovieEntityRepository(
+    internal fun provideMovieEntityRepository(
         pager: Pager<Int, MovieEntity>,
     ): IMovieEntityRepository = MovieEntityRepository(pager = pager)
 

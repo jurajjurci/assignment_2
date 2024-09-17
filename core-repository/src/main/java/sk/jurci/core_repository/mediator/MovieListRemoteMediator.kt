@@ -17,7 +17,7 @@ import sk.jurci.core_repository.mapper.toEntity
 import java.io.IOException
 import javax.inject.Inject
 
-class MovieListRemoteMediator @Inject constructor(
+internal class MovieListRemoteMediator @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
     private val appDatabase: AppDatabase,
     private val apiService: ApiService,
