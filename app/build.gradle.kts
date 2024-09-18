@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(project(":core-repository"))
+    implementation(project(":core-datastore"))
     implementation(project(":feature-movie"))
     implementation(project(":feature-settings"))
 
