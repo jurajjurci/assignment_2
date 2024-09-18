@@ -1,4 +1,4 @@
-package sk.jurci.core_database.repository
+package sk.jurci.core_repository.repository
 
 import androidx.paging.PagingSource
 import androidx.room.withTransaction

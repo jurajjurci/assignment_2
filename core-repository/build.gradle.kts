@@ -43,11 +43,6 @@ dependencies {
     implementation(project(":core-database"))
     ksp(libs.androidx.dagger.hilt.compiler)
 
-    // Retrofit
-    implementation(libs.retrofit)
-
-    implementation(libs.androidx.paging.runtime.ktx)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

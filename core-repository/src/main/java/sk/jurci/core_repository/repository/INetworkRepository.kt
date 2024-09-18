@@ -1,8 +1,8 @@
-package sk.jurci.core_network.repository
+package sk.jurci.core_repository.repository
 
 import sk.jurci.core_network.model.PopularMovieResponseDto
 
-interface INetworkRepository {
+internal interface INetworkRepository {
 
     suspend fun getPopularMovieList(language: String, page: Int): PopularMovieResponseDto
 }
