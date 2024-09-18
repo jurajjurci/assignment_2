@@ -3,8 +3,15 @@
     <string name="settings_title">Application settings</string>
     <string name="settings_button_back">Save settings and go back to movie list</string>
     <string name="settings_theme_label">Select preferred theme</string>
-
     <string name="settings_theme_value_dark">Dark theme</string>
     <string name="settings_theme_value_light">Light theme</string>
     <string name="settings_theme_value_auto">By system settings</string>
+
+    <string name="info_title">Info</string>
+    <string name="info_version_label">Version</string>
+    <string name="info_developed_by_label">Developed by</string>
+    <string name="info_device_info_label">Device info</string>
+    <string name="info_device_model">Model</string>
+    <string name="info_device_os_version">OS Version</string>
+    <string name="info_display">Display</string>
 </resources>

@@ -97,7 +97,11 @@ fun NavigationCompose() {
                 }
             }
 
-            composable<Screen.Info> { InfoUi() }
+            composable<Screen.Info> {
+                InfoUi(
+                    onBackPressed = navController::popBackStack
+                )
+            }
         }
     }
 }
