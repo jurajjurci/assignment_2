@@ -45,7 +45,7 @@ fun Content(
                 .fillMaxWidth()
                 .wrapContentHeight(),
         ) {
-            Spacer(modifier = Modifier.width(Dimensions.MovieDetail.posterImageWidth + Dimensions.paddingLarge))
+            Spacer(modifier = Modifier.width(Dimensions.MovieDetail.posterImageWidth + Dimensions.paddingLarge + Dimensions.paddingLarge))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
