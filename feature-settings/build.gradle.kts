@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(project(":core-datastore"))
 
     // Jetpack Compose
     implementation(libs.androidx.activity.compose)
