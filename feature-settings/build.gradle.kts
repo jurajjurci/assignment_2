@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.google.ksp)
@@ -6,12 +9,22 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val properties = Properties()
+properties.load(FileInputStream(project.rootProject.file("gradle.properties")))
+val versionCodeValue = properties.getProperty("versionCode")
+val versionNumberValue = properties.getProperty("versionName")
+val createdBy = properties.getProperty("createdBy")
+
 android {
     namespace = "sk.jurci.feature_settings"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
+
+        buildConfigField("String", "VERSION_NUMBER", "\"$versionNumberValue\"")
+        buildConfigField("String", "VERSION_CODE", "\"$versionCodeValue\"")
+        buildConfigField("String", "CREATED_BY", "\"$createdBy\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -35,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
