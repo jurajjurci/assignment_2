@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(project(":core-datastore"))
 
     // Jetpack Compose
     implementation(libs.androidx.activity.compose)
@@ -52,6 +53,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.accompanist.systemuicontroller)
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
