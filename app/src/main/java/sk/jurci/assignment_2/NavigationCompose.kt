@@ -13,7 +13,7 @@ import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.serialization.Serializable
 import sk.jurci.assignment_2.utils.parcelableType
-import sk.jurci.core_repository.model.Movie
+import sk.jurci.feature_movie.model.Movie
 import sk.jurci.feature_movie.movie_detail.MovieDetailUi
 import sk.jurci.feature_movie.movie_detail.MovieDetailViewModel
 import sk.jurci.feature_movie.movie_detail.MovieDetailViewModelFactory

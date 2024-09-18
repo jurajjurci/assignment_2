@@ -1,19 +1,19 @@
 package sk.jurci.core_repository.usecase
 
 import androidx.paging.PagingData
-import androidx.paging.map
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import sk.jurci.core_repository.mapper.toUiModel
-import sk.jurci.core_repository.model.Movie
-import sk.jurci.core_repository.repository.IMovieEntityRepository
+import sk.jurci.core_repository.model.MovieDomain
+import sk.jurci.core_repository.repository.IMovieDomainRepository
 import javax.inject.Inject
 
 class GetPopularMoviePagingFlowUseCase @Inject constructor(
-    private val movieEntityRepository: IMovieEntityRepository,
+    private val movieDomainRepository: IMovieDomainRepository,
 ) {
 
-    operator fun invoke(language: String): Flow<PagingData<Movie>> =
-        movieEntityRepository.getPopularMovies(language)
-            .map { pagingData -> pagingData.map { it.toUiModel() } }
+    operator fun invoke(
+        language: String,
+        cachedIn: CoroutineScope,
+    ): Flow<PagingData<MovieDomain>> =
+        movieDomainRepository.getPopularMovies(language, cachedIn)
 }
