@@ -1,4 +1,4 @@
-package sk.jurci.feature_movie.movie_list
+package sk.jurci.feature_movie.movie_list.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

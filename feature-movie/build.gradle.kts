@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.google.hilt.plugin)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -55,6 +57,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil.compose)
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
@@ -62,6 +65,8 @@ dependencies {
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
     ksp(libs.androidx.dagger.hilt.compiler)
+
+    implementation(libs.androidx.palette.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

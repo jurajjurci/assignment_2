@@ -1,10 +1,11 @@
-package sk.jurci.core_repository.model
+package sk.jurci.feature_movie.model
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
-import sk.jurci.core_repository.model.image.BackdropPath
-import sk.jurci.core_repository.model.image.PosterPath
+import kotlinx.parcelize.Parcelize
+import sk.jurci.feature_movie.model.image.BackdropPath
+import sk.jurci.feature_movie.model.image.PosterPath
+import sk.jurci.feature_movie.utils.UrlEncodedStringSerializer
 
 @Serializable
 @Parcelize
@@ -20,6 +21,7 @@ data class Movie(
 
     val originalTitle: String,
 
+    @Serializable(with = UrlEncodedStringSerializer::class)
     val overview: String,
 
     val popularity: Double,
@@ -51,7 +53,7 @@ data class Movie(
             overview = "This is overview",
             popularity = 0.5,
             posterPath = PosterPath(""),
-            releaseDate = "12/2021",
+            releaseDate = "1-12-2021",
             video = false,
             voteAverage = 0.5,
             voteCount = 100,

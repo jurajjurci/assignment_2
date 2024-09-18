@@ -9,6 +9,7 @@ internal object Dimensions {
     val paddingExtraLarge = 32.dp
 
     val elevation = 4.dp
+    val iconSize = 24.dp
 
     object MovieCard {
         private const val RATIO = 1.5f
@@ -18,5 +19,14 @@ internal object Dimensions {
 
     object FavouriteIcon {
         val size = 36.dp
+    }
+
+    object MovieDetail {
+        val maximumWidth = 420.dp
+        val backdropImageHeight = 150.dp
+
+        private const val RATIO = 1.5f
+        val posterImageWidth = 120.dp
+        val posterImageHeight = posterImageWidth * RATIO
     }
 }

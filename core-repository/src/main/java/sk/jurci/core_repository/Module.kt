@@ -12,8 +12,8 @@ import dagger.hilt.components.SingletonComponent
 import sk.jurci.core_database.model.MovieEntity
 import sk.jurci.core_database.repository.IDatabaseRepository
 import sk.jurci.core_network.repository.INetworkRepository
-import sk.jurci.core_repository.repository.IMovieEntityRepository
-import sk.jurci.core_repository.repository.MovieEntityRepository
+import sk.jurci.core_repository.repository.IMovieDomainRepository
+import sk.jurci.core_repository.repository.MovieDomainRepository
 import sk.jurci.core_repository.mediator.MovieListRemoteMediator
 import sk.jurci.core_repository.util.Constants
 import javax.inject.Singleton
@@ -26,20 +26,33 @@ class Module {
     @Singleton
     internal fun providesMovieEntityRepository(
         pager: Pager<Int, MovieEntity>,
-    ): IMovieEntityRepository = MovieEntityRepository(pager = pager)
+        movieListRemoteMediator: MovieListRemoteMediator,
+        databaseRepository: IDatabaseRepository,
+    ): IMovieDomainRepository = MovieDomainRepository(
+        pager = pager,
+        movieListRemoteMediator = movieListRemoteMediator,
+        databaseRepository = databaseRepository,
+    )
 
     @Provides
     @Singleton
-    fun providesMoviePager(
+    internal fun providesMovieListRemoteMediator(
         databaseRepository: IDatabaseRepository,
         networkRepository: INetworkRepository
+    ): MovieListRemoteMediator = MovieListRemoteMediator(
+        databaseRepository = databaseRepository,
+        networkRepository = networkRepository,
+    )
+
+    @Provides
+    @Singleton
+    internal fun providesMoviePager(
+        movieListRemoteMediator: MovieListRemoteMediator,
+        databaseRepository: IDatabaseRepository,
     ): Pager<Int, MovieEntity> {
         return Pager(
             config = PagingConfig(pageSize = Constants.MOVIE_PAGE_SIZE),
-            remoteMediator = MovieListRemoteMediator(
-                databaseRepository = databaseRepository,
-                networkRepository = networkRepository,
-            ),
+            remoteMediator = movieListRemoteMediator,
             pagingSourceFactory = {
                 databaseRepository.moviePagingSource()
             },

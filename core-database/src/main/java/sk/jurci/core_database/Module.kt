@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import sk.jurci.core_database.dao.MovieDao
 import sk.jurci.core_database.database.AppDatabase
+import sk.jurci.core_database.database.migration.MigrationFrom1To2
 import sk.jurci.core_database.repository.DatabaseRepository
 import sk.jurci.core_database.repository.IDatabaseRepository
 import javax.inject.Qualifier
@@ -31,11 +32,14 @@ class Module {
     @Provides
     @Singleton
     internal fun providesAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            AppDatabase::class.java,
-            AppDatabase.DATABASE_NAME
-        ).build()
+        return Room
+            .databaseBuilder(
+                appContext,
+                AppDatabase::class.java,
+                AppDatabase.DATABASE_NAME
+            )
+            .addMigrations(MigrationFrom1To2())
+            .fallbackToDestructiveMigration().build()
     }
 
     @Provides

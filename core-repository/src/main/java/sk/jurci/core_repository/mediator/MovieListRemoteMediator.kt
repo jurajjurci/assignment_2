@@ -22,6 +22,8 @@ internal class MovieListRemoteMediator(
         private const val LANGUAGE: String = "en-US"
     }
 
+    private var language: String = LANGUAGE
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, MovieEntity>
@@ -41,7 +43,7 @@ internal class MovieListRemoteMediator(
             }
 
             val popularMovieResponse = networkRepository.getPopularMovieList(
-                language = LANGUAGE,
+                language = language,
                 page = currentPaging.page,
             )
 
@@ -63,5 +65,9 @@ internal class MovieListRemoteMediator(
         } catch (exception: HttpException) {
             MediatorResult.Error(exception)
         }
+    }
+
+    fun setLanguage(language: String) {
+        this.language = language
     }
 }

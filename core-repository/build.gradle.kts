@@ -3,8 +3,6 @@ plugins {
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.hilt.plugin)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -38,7 +36,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.kotlinx.serialization.json)
     implementation(project(":core-network"))
 
     // Dependency Injection

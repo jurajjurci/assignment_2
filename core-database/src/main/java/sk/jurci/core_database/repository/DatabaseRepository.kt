@@ -3,8 +3,10 @@ package sk.jurci.core_database.repository
 import androidx.paging.PagingSource
 import androidx.room.withTransaction
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import sk.jurci.core_database.database.AppDatabase
+import sk.jurci.core_database.model.FavouriteMovie
 import sk.jurci.core_database.model.MovieEntity
 
 internal class DatabaseRepository(
@@ -21,6 +23,29 @@ internal class DatabaseRepository(
                 appDatabase.movieDao.upsertAll(movieList)
             }
         }
+    }
+
+    override suspend fun markMovieAsFavourite(movieId: Long, favourite: Boolean) {
+        withContext(ioDispatcher) {
+            appDatabase.withTransaction {
+                val favouriteMovie = FavouriteMovie(id = movieId)
+                if (favourite) {
+                    appDatabase.favouriteMovieDao.insert(favouriteMovie)
+                } else {
+                    appDatabase.favouriteMovieDao.delete(favouriteMovie)
+                }
+            }
+        }
+    }
+
+    override suspend fun isMovieMarkerAsFavourite(movieId: Long): Boolean {
+        return withContext(ioDispatcher) {
+            appDatabase.favouriteMovieDao.getFavouriteMovieEntity(movieId) != null
+        }
+    }
+
+    override fun getAllFavouriteMovies(): Flow<List<FavouriteMovie>> {
+        return appDatabase.favouriteMovieDao.getAllFavouriteMovies()
     }
 
     override fun moviePagingSource(): PagingSource<Int, MovieEntity> {

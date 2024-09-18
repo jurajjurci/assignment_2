@@ -23,6 +23,7 @@ loggingInterceptor = "4.12.0"
 converterKotlinxSerialization = "2.11.0"
 datastore = "1.1.1"
 timber = "5.0.1"
+paletteKtx = "1.0.0"
 
 # Testing
 junit = "4.13.2"
@@ -68,6 +69,7 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "paletteKtx" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
