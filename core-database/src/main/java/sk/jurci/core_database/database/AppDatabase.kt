@@ -19,9 +19,9 @@ abstract class AppDatabase : RoomDatabase() {
         const val DATABASE_NAME = "Movie"
     }
 
-    internal abstract val movieDao: MovieDao
+    abstract val movieDao: MovieDao
 
-    internal abstract val movieIdToGenreIdDao: MovieIdToGenreIdDao
+    abstract val movieIdToGenreIdDao: MovieIdToGenreIdDao
 
-    internal abstract val favouriteMovieDao: FavouriteMovieDao
+    abstract val favouriteMovieDao: FavouriteMovieDao
 }

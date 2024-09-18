@@ -64,7 +64,7 @@ dependencies {
     ksp(libs.androidx.dagger.hilt.compiler)
 
     // Retrofit
-    implementation(libs.retrofit)
+    api(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.converter.kotlinx.serialization)

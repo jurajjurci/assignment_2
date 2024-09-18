@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import sk.jurci.core_database.model.FavouriteMovie
 
 @Dao
-internal interface FavouriteMovieDao {
+interface FavouriteMovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favouriteMovie: FavouriteMovie)

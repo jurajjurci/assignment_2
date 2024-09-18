@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import sk.jurci.core_database.model.MovieEntity
-import sk.jurci.core_database.repository.IDatabaseRepository
 import sk.jurci.core_repository.mapper.toDomainModel
 import sk.jurci.core_repository.mediator.MovieListRemoteMediator
 import sk.jurci.core_repository.model.MovieDomain

@@ -1,4 +1,4 @@
-package sk.jurci.core_network.repository
+package sk.jurci.core_repository.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

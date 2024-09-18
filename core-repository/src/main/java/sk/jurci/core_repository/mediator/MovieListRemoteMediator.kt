@@ -8,8 +8,8 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import retrofit2.HttpException
 import sk.jurci.core_database.model.MovieEntity
-import sk.jurci.core_database.repository.IDatabaseRepository
-import sk.jurci.core_network.repository.INetworkRepository
+import sk.jurci.core_repository.repository.IDatabaseRepository
+import sk.jurci.core_repository.repository.INetworkRepository
 import sk.jurci.core_repository.mapper.toEntity
 import java.io.IOException
 
