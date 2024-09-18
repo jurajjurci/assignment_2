@@ -53,6 +53,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.accompanist.systemuicontroller)
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)

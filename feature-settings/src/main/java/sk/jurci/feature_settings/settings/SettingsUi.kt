@@ -21,13 +21,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sk.jurci.core_datastore.model.Theme
 import sk.jurci.feature_settings.R
+import sk.jurci.feature_settings.model.mapper.mapToDarkThemeValue
 import sk.jurci.feature_settings.ui.theme.Dimensions
+import sk.jurci.feature_settings.ui.utils.ChangeStatusBarColor
 
 @Preview
 @Composable
@@ -46,6 +51,7 @@ fun SettingsUi(
     setSelectedTheme: (Theme) -> Unit,
 ) {
     BackHandler { onBackPressed() }
+    ChangeStatusBarColor(selectedTheme)
     Scaffold(
         topBar = {
             TopAppBar(
