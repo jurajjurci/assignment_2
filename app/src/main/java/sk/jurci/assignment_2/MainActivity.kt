@@ -22,9 +22,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel = hiltViewModel<MainActivityViewModel>()
-            val theme = viewModel.selectedTheme.collectAsStateWithLifecycle()
-            Assignment_2Theme(darkTheme = theme.value.mapToDarkThemeValue()) {
-                ChangeStatusBarColor(theme.value)
+            val theme = viewModel.selectedTheme.collectAsStateWithLifecycle().value
+                ?: return@setContent
+            Assignment_2Theme(darkTheme = theme.mapToDarkThemeValue()) {
+                ChangeStatusBarColor(theme)
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     NavigationCompose()
                 }

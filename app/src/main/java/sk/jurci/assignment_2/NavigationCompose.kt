@@ -82,12 +82,13 @@ fun NavigationCompose() {
 
             composable<Screen.Settings> {
                 val viewModel = hiltViewModel<SettingsViewModel>()
-                val selectedTheme = viewModel.currentTheme.collectAsStateWithLifecycle()
-                Assignment_2Theme(darkTheme = selectedTheme.value.mapToDarkThemeValue()) {
+                val selectedTheme = viewModel.currentTheme.collectAsStateWithLifecycle().value
+                    ?: return@composable
+                Assignment_2Theme(darkTheme = selectedTheme.mapToDarkThemeValue()) {
                     SettingsUi(
-                        selectedTheme = selectedTheme.value,
+                        selectedTheme = selectedTheme,
                         onBackPressed = {
-                            viewModel.saveSelectedTheme(selectedTheme.value)
+                            viewModel.saveSelectedTheme(selectedTheme)
                             navController.popBackStack()
                         },
                         setSelectedTheme = viewModel::setSelectedTheme,

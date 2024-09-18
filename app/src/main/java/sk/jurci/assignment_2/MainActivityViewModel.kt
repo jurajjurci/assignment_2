@@ -15,10 +15,10 @@ class MainActivityViewModel @Inject constructor(
     datastoreRepository: IDatastoreRepository,
 ) : ViewModel() {
 
-    val selectedTheme: StateFlow<Theme> = datastoreRepository.getSelectedTheme()
+    val selectedTheme: StateFlow<Theme?> = datastoreRepository.getSelectedTheme()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-            initialValue = Theme.Auto,
+            initialValue = null,
         )
 }

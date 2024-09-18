@@ -24,7 +24,7 @@ class SettingsViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-        initialValue = Theme.Auto,
+        initialValue = null,
     )
 
     fun setSelectedTheme(theme: Theme) {
