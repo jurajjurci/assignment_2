@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movie_list_title">Populárne filmy</string>
+    <string name="movie_list_button_info">Informácie</string>
+    <string name="movie_list_button_settings">Nastavenia</string>
+    <string name="movie_list_error">Došlo k chybe, skúste to znova neskôr…</string>
+    <string name="movie_list_error_empty">Došlo k chybe, zoznam filmov je prázdny.</string>
+    <string name="movie_list_snack_bar_close">Zavrieť</string>
+    <string name="movie_list_favourite_icon_empty">Prázdne srdce</string>
+    <string name="movie_list_favourite_icon_filled">Plné srdce</string>
+
+    <string name="movie_detail_button_back">Späť na zoznam filmov</string>
+    <string name="movie_detail_button_add_to_favourite">Pridať medzi obľúbené</string>
+    <string name="movie_detail_button_remove_from_favourite">Odstrániť z obľúbených</string>
+    <string name="movie_detail_label_for_adults">18+</string>
+    <string name="movie_detail_label_rating">Hodnotenie</string>
+    <string name="movie_detail_label_release_date">Dátum vydania</string>
+    <string name="movie_detail_label_original_title">Pôvodný názov</string>
+    <string name="movie_detail_label_original_language">Pôvodný jazyk</string>
+</resources>

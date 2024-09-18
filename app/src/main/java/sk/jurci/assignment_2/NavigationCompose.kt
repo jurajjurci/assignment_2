@@ -52,6 +52,7 @@ fun NavigationCompose() {
                 val movieList = viewModel.popularMovieList.collectAsLazyPagingItems()
                 MovieListUi(
                     animatedVisibilityScope = this,
+                    onInfoButtonClick = { navController.navigate(Screen.Info) },
                     onSettingsButtonClick = { navController.navigate(Screen.Settings) },
                     movieList = movieList,
                     onMovieItemClick = { movie -> navController.navigate(Screen.MovieDetail(movie)) },
@@ -96,7 +97,11 @@ fun NavigationCompose() {
                 }
             }
 
-            composable<Screen.Info> { InfoUi() }
+            composable<Screen.Info> {
+                InfoUi(
+                    onBackPressed = navController::popBackStack
+                )
+            }
         }
     }
 }

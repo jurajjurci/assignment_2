@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Nastavenia aplikácie</string>
+    <string name="settings_button_back">Uložiť nastavenia a vrátiť sa na zoznam filmov</string>
+    <string name="settings_theme_label">Vyberte preferovanú tému</string>
+    <string name="settings_theme_value_dark">Tmavá téma</string>
+    <string name="settings_theme_value_light">Svetlá téma</string>
+    <string name="settings_theme_value_auto">Podľa nastavení systému</string>
+
+    <string name="info_title">Informácie</string>
+    <string name="info_version_label">Verzia</string>
+    <string name="info_developed_by_label">Vyvinuté</string>
+    <string name="info_device_info_label">Informácie o zariadení</string>
+    <string name="info_device_model">Model</string>
+    <string name="info_device_os_version">Verzia OS</string>
+    <string name="info_display">Displej</string>
+</resources>

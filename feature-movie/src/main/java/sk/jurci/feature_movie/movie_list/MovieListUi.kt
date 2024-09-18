@@ -23,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -87,6 +88,7 @@ internal fun MovieListUiPreview() {
         AnimatedVisibility(visible = true) {
             MovieListUi(
                 animatedVisibilityScope = this,
+                onInfoButtonClick = {},
                 onSettingsButtonClick = {},
                 movieList = movieList,
                 onMovieItemClick = {},
@@ -98,6 +100,7 @@ internal fun MovieListUiPreview() {
 @Composable
 fun SharedTransitionScope.MovieListUi(
     animatedVisibilityScope: AnimatedVisibilityScope,
+    onInfoButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
     movieList: LazyPagingItems<Movie>,
     onMovieItemClick: (Movie) -> Unit,
@@ -131,10 +134,17 @@ fun SharedTransitionScope.MovieListUi(
                 title = { Text(text = stringResource(R.string.movie_list_title)) },
                 scrollBehavior = scrollBehavior,
                 actions = {
+                    IconButton(onClick = onInfoButtonClick) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = stringResource(R.string.movie_list_button_info),
+                            modifier = Modifier.size(Dimensions.iconSize)
+                        )
+                    }
                     IconButton(onClick = onSettingsButtonClick) {
                         Icon(
                             imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.movie_detail_button_remove_from_favourite),
+                            contentDescription = stringResource(R.string.movie_list_button_settings),
                             modifier = Modifier.size(Dimensions.iconSize)
                         )
                     }

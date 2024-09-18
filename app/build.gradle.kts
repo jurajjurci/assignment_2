@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
@@ -7,6 +10,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+val properties = Properties()
+properties.load(FileInputStream(project.rootProject.file("gradle.properties")))
+val versionCodeValue = properties.getProperty("versionCode")
+val versionNumberValue = properties.getProperty("versionName")
+
 android {
     namespace = "sk.jurci.assignment_2"
     compileSdk = 34
@@ -15,8 +23,8 @@ android {
         applicationId = "sk.jurci.assignment_2"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionCodeValue.toInt()
+        versionName = versionNumberValue
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
