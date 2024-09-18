@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
+    ExperimentalSharedTransitionApi::class
+)
 
 package sk.jurci.feature_movie.movie_detail
 
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -121,16 +126,18 @@ fun SharedTransitionScope.MovieDetailUi(
             ) {
                 Content(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .wrapContentHeight()
+                        .widthIn(max = Dimensions.MovieDetail.maximumWidth)
+                        .align(Alignment.TopCenter)
                         .padding(top = Dimensions.MovieDetail.backdropImageHeight),
                     movie = movie,
                 )
                 Header(
                     animatedVisibilityScope = animatedVisibilityScope,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(Dimensions.MovieDetail.backdropImageHeight),
+                        .height(Dimensions.MovieDetail.backdropImageHeight)
+                        .widthIn(max = Dimensions.MovieDetail.maximumWidth)
+                        .align(Alignment.TopCenter),
                     movie = movie,
                 )
             }

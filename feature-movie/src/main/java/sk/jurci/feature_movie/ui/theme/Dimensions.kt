@@ -22,6 +22,7 @@ internal object Dimensions {
     }
 
     object MovieDetail {
+        val maximumWidth = 420.dp
         val backdropImageHeight = 150.dp
 
         private const val RATIO = 1.5f

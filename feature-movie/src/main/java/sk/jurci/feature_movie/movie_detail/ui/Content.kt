@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import sk.jurci.feature_movie.model.Movie
 import sk.jurci.feature_movie.R
@@ -55,11 +56,12 @@ fun Content(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = Dimensions.paddingMedium, horizontal = Dimensions.paddingLarge)
+                .padding(vertical = Dimensions.paddingLarge, horizontal = Dimensions.paddingExtraLarge)
         ) {
             Text(
                 text = movie.overview,
                 style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Justify,
             )
         }
     }

@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -100,7 +101,7 @@ internal fun SharedTransitionScope.MovieItem(
                             tween(durationMillis = Constants.TRANSACTION_ANIMATION_DURATION)
                         }
                     ),
-                model = movie.posterPath.toUrl(PosterSize.W_154),
+                model = movie.posterPath.toUrl(PosterSize.W_342),
                 contentScale = ContentScale.Crop,
                 contentDescription = movie.title,
             )
@@ -164,6 +165,7 @@ private fun Title(
             text = text,
             color = Color.White,
             style = MaterialTheme.typography.labelLarge,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

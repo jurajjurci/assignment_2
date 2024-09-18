@@ -53,7 +53,7 @@ data class Movie(
             overview = "This is overview",
             popularity = 0.5,
             posterPath = PosterPath(""),
-            releaseDate = "12/2021",
+            releaseDate = "1-12-2021",
             video = false,
             voteAverage = 0.5,
             voteCount = 100,
