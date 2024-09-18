@@ -43,6 +43,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import sk.jurci.feature_movie.model.Movie
 import sk.jurci.feature_movie.R
+import sk.jurci.feature_movie.model.image.BackdropSize
+import sk.jurci.feature_movie.model.image.PosterSize
+import sk.jurci.feature_movie.movie_detail.ui.BackgroundImage
 import sk.jurci.feature_movie.movie_detail.ui.Content
 import sk.jurci.feature_movie.movie_detail.ui.Header
 import sk.jurci.feature_movie.ui.theme.Dimensions
@@ -132,14 +135,27 @@ fun SharedTransitionScope.MovieDetailUi(
                         .padding(top = Dimensions.MovieDetail.backdropImageHeight),
                     movie = movie,
                 )
-                Header(
-                    animatedVisibilityScope = animatedVisibilityScope,
+                Box(
                     modifier = Modifier
-                        .height(Dimensions.MovieDetail.backdropImageHeight)
-                        .widthIn(max = Dimensions.MovieDetail.maximumWidth)
-                        .align(Alignment.TopCenter),
-                    movie = movie,
-                )
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                ) {
+                    BackgroundImage(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(Dimensions.MovieDetail.backdropImageHeight),
+                        imageUrl = movie.backdropPath?.toUrl(BackdropSize.W_1280),
+                        contentDescription = movie.title,
+                        alternativeImage = movie.posterPath.toUrl(PosterSize.W_154)
+                    )
+                    Header(
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        modifier = Modifier
+                            .widthIn(max = Dimensions.MovieDetail.maximumWidth)
+                            .align(Alignment.TopCenter),
+                        movie = movie,
+                    )
+                }
             }
         }
     }
