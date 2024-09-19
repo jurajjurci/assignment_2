@@ -25,6 +25,12 @@ internal class DatabaseRepository(
         }
     }
 
+    override suspend fun getMovie(movieId: Long): MovieEntity? {
+        return withContext(ioDispatcher) {
+            appDatabase.movieDao.getMovieEntity(movieId)
+        }
+    }
+
     override suspend fun markMovieAsFavourite(movieId: Long, favourite: Boolean) {
         withContext(ioDispatcher) {
             appDatabase.withTransaction {

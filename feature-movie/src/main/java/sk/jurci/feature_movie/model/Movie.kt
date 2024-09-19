@@ -1,14 +1,8 @@
 package sk.jurci.feature_movie.model
 
-import android.os.Parcelable
-import kotlinx.serialization.Serializable
-import kotlinx.parcelize.Parcelize
 import sk.jurci.feature_movie.model.image.BackdropPath
 import sk.jurci.feature_movie.model.image.PosterPath
-import sk.jurci.feature_movie.utils.UrlEncodedStringSerializer
 
-@Serializable
-@Parcelize
 data class Movie(
 
     val id: Long,
@@ -21,7 +15,6 @@ data class Movie(
 
     val originalTitle: String,
 
-    @Serializable(with = UrlEncodedStringSerializer::class)
     val overview: String,
 
     val popularity: Double,
@@ -39,7 +32,7 @@ data class Movie(
     val voteCount: Int,
 
     var favourite: Boolean,
-) : Parcelable {
+) {
 
     companion object {
         val DEMO_MOVIE = Movie(

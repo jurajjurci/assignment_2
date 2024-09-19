@@ -14,8 +14,6 @@ import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.serialization.Serializable
 import sk.jurci.assignment_2.ui.theme.Assignment_2Theme
-import sk.jurci.assignment_2.utils.parcelableType
-import sk.jurci.feature_movie.model.Movie
 import sk.jurci.feature_movie.movie_detail.MovieDetailUi
 import sk.jurci.feature_movie.movie_detail.MovieDetailViewModel
 import sk.jurci.feature_movie.movie_detail.MovieDetailViewModelFactory
@@ -25,14 +23,13 @@ import sk.jurci.feature_settings.info.InfoUi
 import sk.jurci.feature_settings.model.mapper.mapToDarkThemeValue
 import sk.jurci.feature_settings.settings.SettingsUi
 import sk.jurci.feature_settings.settings.SettingsViewModel
-import kotlin.reflect.typeOf
 
 object Screen {
     @Serializable
     object MovieList
 
     @Serializable
-    data class MovieDetail(val movie: Movie)
+    data class MovieDetail(val movieId: Long)
 
     @Serializable
     object Settings
@@ -55,18 +52,17 @@ fun NavigationCompose() {
                     onInfoButtonClick = { navController.navigate(Screen.Info) },
                     onSettingsButtonClick = { navController.navigate(Screen.Settings) },
                     movieList = movieList,
-                    onMovieItemClick = { movie -> navController.navigate(Screen.MovieDetail(movie)) },
+                    onMovieItemClick = { movie -> navController.navigate(Screen.MovieDetail(movie.id)) },
                 )
             }
 
-            composable<Screen.MovieDetail>(
-                typeMap = mapOf(typeOf<Movie>() to parcelableType<Movie>())
-            ) { backStackEntry ->
+            composable<Screen.MovieDetail> { backStackEntry ->
                 val movieRoute = backStackEntry.toRoute<Screen.MovieDetail>()
-                val movie = movieRoute.movie
+                val movieId = movieRoute.movieId
                 val viewModel = hiltViewModel<MovieDetailViewModel, MovieDetailViewModelFactory> {
-                    it.create(movie.favourite)
+                    it.create(movieId)
                 }
+                val movie = viewModel.movie ?: return@composable
                 MovieDetailUi(
                     animatedVisibilityScope = this,
                     movie = movie,
@@ -74,7 +70,7 @@ fun NavigationCompose() {
                     onBackPressed = navController::popBackStack,
                     onFavouriteButtonClick = { favourite ->
                         viewModel.markMovieAsFavourite(
-                            movieId = movie.id,
+                            movieId = movieId,
                             favourite = favourite,
                         )
                     }

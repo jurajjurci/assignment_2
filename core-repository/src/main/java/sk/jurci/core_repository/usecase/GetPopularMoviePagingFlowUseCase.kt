@@ -14,6 +14,5 @@ class GetPopularMoviePagingFlowUseCase @Inject constructor(
     operator fun invoke(
         language: String,
         cachedIn: CoroutineScope,
-    ): Flow<PagingData<MovieDomain>> =
-        movieDomainRepository.getPopularMovies(language, cachedIn)
+    ): Flow<PagingData<MovieDomain>> = movieDomainRepository.getPopularMovies(language, cachedIn)
 }

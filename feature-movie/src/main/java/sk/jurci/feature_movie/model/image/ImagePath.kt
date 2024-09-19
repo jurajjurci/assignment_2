@@ -1,11 +1,8 @@
 package sk.jurci.feature_movie.model.image
 
-import kotlinx.serialization.Serializable
 import sk.jurci.core_repository.util.Constants
 
-@Serializable
 abstract class ImagePath<T>(
-    @Serializable(with = sk.jurci.feature_movie.utils.UrlEncodedStringSerializer::class)
     private val path: String = ""
 ) {
 

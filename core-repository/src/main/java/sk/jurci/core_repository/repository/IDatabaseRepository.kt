@@ -7,6 +7,7 @@ import sk.jurci.core_database.model.MovieEntity
 
 internal interface IDatabaseRepository {
     suspend fun insertAll(movieList: List<MovieEntity>, clear: Boolean = false)
+    suspend fun getMovie(movieId: Long): MovieEntity?
     suspend fun markMovieAsFavourite(movieId: Long, favourite: Boolean)
     suspend fun isMovieMarkerAsFavourite(movieId: Long): Boolean
     fun getAllFavouriteMovies(): Flow<List<FavouriteMovie>>

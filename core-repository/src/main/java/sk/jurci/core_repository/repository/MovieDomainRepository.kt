@@ -35,6 +35,11 @@ internal class MovieDomainRepository(
             }
     }
 
+    override suspend fun getMovie(movieId: Long): MovieDomain? {
+        val isFavourite = isMovieMarkedAsFavourite(movieId)
+        return databaseRepository.getMovie(movieId)?.toDomainModel(isFavourite)
+    }
+
     override suspend fun markMovieAsFavourite(movieId: Long, favourite: Boolean) {
         databaseRepository.markMovieAsFavourite(movieId = movieId, favourite = favourite)
     }

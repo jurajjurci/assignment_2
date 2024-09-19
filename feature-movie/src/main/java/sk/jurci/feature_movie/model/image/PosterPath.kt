@@ -1,16 +1,6 @@
 package sk.jurci.feature_movie.model.image
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
-
-@Serializable
-@Parcelize
-class PosterPath(
-    @Transient
-    private val path: String = ""
-) : ImagePath<PosterSize>(path = path), Parcelable {
+class PosterPath(path: String) : ImagePath<PosterSize>(path = path) {
 
     override fun toUrl(size: PosterSize): String {
         return toUrl(size.toString())

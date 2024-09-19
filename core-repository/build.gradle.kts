@@ -37,10 +37,10 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(project(":core-network"))
+    implementation(project(":core-database"))
 
     // Dependency Injection
     implementation(libs.androidx.dagger.hilt)
-    implementation(project(":core-database"))
     ksp(libs.androidx.dagger.hilt.compiler)
 
     testImplementation(libs.junit)
