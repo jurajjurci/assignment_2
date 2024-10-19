@@ -1,7 +1,7 @@
 [versions]
 
 ### PLUGINS ###
-agp = "8.6.1"
+agp = "8.7.1"
 google-ksp = "2.0.10-1.0.24"
 dagger-hilt = "2.51.1"
 kotlin = "2.0.10"
@@ -11,11 +11,11 @@ room = "2.6.1"
 ### DEPENDECIES ###
 coreKtx = "1.13.1"
 lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.2"
-composeBom = "2024.09.02"
+activityCompose = "1.9.3"
+composeBom = "2024.10.00"
 coilCompose = "2.7.0"
 accompanistSystemuicontroller = "0.30.1"
-navigationCompose = "2.8.1"
+navigationCompose = "2.8.3"
 serialization = "1.6.3"
 hilt = "1.2.0"
 retrofit = "2.11.0"
@@ -41,7 +41,6 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-material = { group = "androidx.compose.material", name = "material" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
